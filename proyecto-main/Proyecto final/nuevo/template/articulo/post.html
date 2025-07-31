@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load colaborador_tags %}
+
+<title>{% block title %}Artículo: {{ articulos.titulo | capfirst }} {%endblock %}</title>
+
+{% block contenido %}
+
+<!-- Open Content -->
+<section class="bg-light">
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-lg-5 mt-5">
+                <div class="card mb-3">
+                    {% if articulos.imagen %}
+                        <img class="card-img img-fluid" src="{{ articulos.imagen.url }}" alt="">
+                    {% else %}
+                        <img class="img-fluid" src="{% static '/assets/img/banner_img_01.jpg' %}" alt="">
+                    {% endif %}
+                </div>
+            </div>
+            <!-- col end -->
+            <div class="col-lg-7 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="h2">{{ articulos.titulo | capfirst }}</h1>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>Categoría</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-muted"><strong>{{ articulos.categoria | capfirst }}</strong></p>
+                            </li>
+                        <p class="h6 py-2">Resumen: {{ articulos.resumen | capfirst }}</p>
+                        <h6>Contenido</h6>
+                        </ul>
+                        <p class="h3 py-2">{{ articulos.contenido | capfirst }}</p>
+                        <form action="" method="GET">
+                            <div class="row pb-3">
+                                <div class="col d-grid">
+                                    <a class="btn btn-success btn-lg" href="#comentario"><span>Comentar</span></a>
+                                </div>
+                                <!--Solo si es colaborador-->
+                                {% if user.is_superuser or request.user|has_group:"Colaborador"  %}
+                                <div class="col d-grid">
+                                    <a href="{% url 'apps.articulo:articulo_actualizar' pk=articulos.pk %}" class="btn btn-success btn-lg" value="eliminar">Editar articulo</a>
+                                </div>
+                                <!--Solo si es colaborador-->
+                                <div class="col d-grid">
+                                        <a href="{% url 'apps.articulo:articulo_eliminar' pk=articulos.pk %}" class="btn btn-success btn-lg" value="eliminar">Eliminar articulo</a>
+                                </div>  
+                                {% endif %}                                                           
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Close Content -->
+
+<!-- Start Article -->
+<div class="container py-5">
+    <div class="row py-5">
+        <div class="col-md-6 m-auto text-center">
+            <h1 class="h1">Comentarios</h1>
+            <p>
+                Aquí podrás ver los comentarios de este artículo, o podrás comentar (siempre y cuando estés registrado y logueado!)
+            </p>
+
+        <h1>{{ mensaje }}</h1>
+        {% for comentario in comentarios %}
+        <div class="p-5 pb-1">
+            <div class="product-wap card rounded-0">
+                <div class="card rounded-0 text-center mb-2">
+                    <li class="list-inline"></li>
+                        <h6>{{ comentario.usuario }} - {{ comentario.fecha }}</h6>
+                    </li>
+                </div>
+                <div class="card-body">
+                        <p>{{ comentario.texto  }}</p>
+                    {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+                    <a class="btn btn-success btn-lg"
+                        href="{% url 'apps.comentario:eliminarComentario' comentario.pk %}">Eliminar comentario</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% empty %}
+        <li>No hay comentarios - Puedes ser el primero en comentar!</li>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+        <div class="container-fluid bg-light py-5">
+        <div class="col-md-6 m-auto text-center">
+        <a id="comentario"></a>
+        <div class="comentario">
+            
+            <form action="" class="col-md-9 m-auto" method="POST" role="form">
+                
+                {% csrf_token %}
+
+                {% if user.is_authenticated %}
+                <br>
+                <h2 class="h3">Deja tu comentario</h2>
+                {{ form | crispy }}
+                    <button class="btn btn-success btn-lg" type="submit">Comentar</button>
+                {% else %}
+                    <h2>Debes iniciar sesión o registrarte para comentar</h2>
+                    <a class="btn btn-success btn-lg" href="{% url 'apps.usuario:login' %}?next={{ request.path }}#comentario">Iniciar sesión</a>
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    
+                {% endif %}
+            </form>
+        </div>
+    </div>
+        </div>
+
+</section>
+
+</div>
+</section>
+<!-- End Article -->
+
+
+{%endblock %}
