@@ -6,9 +6,11 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.models import Group
-from django.views.generic import CreateView, ListView, DeleteView
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView, DetailView
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth.forms import UserChangeForm
+from django import forms
 
 
 class RegistrarUsuario(CreateView):
@@ -77,4 +79,59 @@ class MyPasswordResetView(PasswordResetView):
     def get_success_url(self):
         messages.success(self.request, 'Se envió un email de recuperación. Revise su casilla de correo para recuperar su cuenta.')
         return reverse('index')
+
+# Nuevas vistas para el perfil de usuario
+class PerfilUsuarioView(LoginRequiredMixin, DetailView):
+    model = Usuario
+    template_name = 'usuario/perfil.html'
+    context_object_name = 'usuario'
+
+    def get_object(self):
+        return self.request.user
+
+class EditarPerfilView(LoginRequiredMixin, UpdateView):
+    model = Usuario
+    template_name = 'usuario/editar_perfil.html'
+    fields = ['username', 'first_name', 'last_name', 'email', 'imagen']
+    
+    def get_object(self):
+        return self.request.user
+    
+    def get_success_url(self):
+        messages.success(self.request, 'Perfil actualizado correctamente.')
+        return reverse('apps.usuario:perfil')
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Perfil actualizado correctamente.')
+        return response
+
+class CambiarPasswordView(LoginRequiredMixin, UpdateView):
+    model = Usuario
+    template_name = 'usuario/cambiar_password.html'
+    fields = []
+    
+    def get_object(self):
+        return self.request.user
+    
+    def get_success_url(self):
+        messages.success(self.request, 'Contraseña cambiada correctamente.')
+        return reverse('apps.usuario:perfil')
+    
+    def form_valid(self, form):
+        password1 = self.request.POST.get('password1')
+        password2 = self.request.POST.get('password2')
+        
+        if password1 != password2:
+            messages.error(self.request, 'Las contraseñas no coinciden.')
+            return self.form_invalid(form)
+        
+        if len(password1) < 8:
+            messages.error(self.request, 'La contraseña debe tener al menos 8 caracteres.')
+            return self.form_invalid(form)
+        
+        self.object.set_password(password1)
+        self.object.save()
+        messages.success(self.request, 'Contraseña cambiada correctamente.')
+        return redirect(self.get_success_url())
 

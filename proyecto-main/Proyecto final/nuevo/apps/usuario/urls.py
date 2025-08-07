@@ -13,4 +13,8 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('usuarios/', UsuarioListView.as_view(), name='usuario_list'),
     path('usuario/<int:pk>/eliminar/', UsuarioDeleteView.as_view(), name='usuario_delete'),
+    # Nuevas URLs para el perfil
+    path('perfil/', PerfilUsuarioView.as_view(), name='perfil'),
+    path('perfil/editar/', EditarPerfilView.as_view(), name='editar_perfil'),
+    path('perfil/cambiar-password/', CambiarPasswordView.as_view(), name='cambiar_password'),
 ]

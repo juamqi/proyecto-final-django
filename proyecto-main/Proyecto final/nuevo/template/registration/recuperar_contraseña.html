@@ -2,39 +2,61 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-<title>{% block title %} Registro de usuario {% endblock title %}</title>
+{% block title %}Recuperar Contraseña{% endblock %}
 
-
-{% block contenido %}
-
-<div class="container-fluid bg-light py-5">
-    <div class="col-md-6 m-auto text-center">
-        <h1 class="h1">Recuperar contraseña</h1>
-        <p>
-            Sentimos que hayas olvidado tu contraseña, pero puedes recuperarla ingresando tu email.
-        </p>
-    </div>
-</div>
-
-<div class="container py-5">
-    <div class="row py-5">
-        <form action="{{ action_url }}" class="col-md-9 m-auto" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="row">
-
-
-                {{ form | crispy }}
-                
-            </div>
-
-            <div class="row">
-                <div class="col text-end mt-2">
-                    <button type="submit" class="btn btn-success btn-lg px-3">Enviar</button>
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-key me-2"></i>
+                        Recuperar Contraseña
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>¿Olvidaste tu contraseña?</strong><br>
+                        No te preocupes, ingresa tu dirección de email y te enviaremos un enlace para restablecer tu contraseña.
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">
+                                <i class="fas fa-envelope me-1"></i>Dirección de Email
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger mt-1">
+                                    {{ form.email.errors }}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                Ingresa la dirección de email que usaste para registrarte.
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-info me-2">
+                                <i class="fas fa-paper-plane me-1"></i>Enviar Email de Recuperación
+                            </button>
+                            <a href="{% url 'apps.usuario:login' %}" class="btn btn-secondary me-2">
+                                <i class="fas fa-arrow-left me-1"></i>Volver al Login
+                            </a>
+                            <a href="{% url 'index' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-home me-1"></i>Inicio
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
-
-
 {% endblock %}
