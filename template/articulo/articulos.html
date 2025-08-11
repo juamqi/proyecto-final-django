@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load colaborador_tags %}
+
+<title> {% block title %} Artículos {% endblock title %} </title>
+{% block contenido %}
+
+<section class="container py-5">
+    <h2>Ordenar por:</h2>
+    <ul>
+        <a class="btn btn-success btn-lg" href="{% url 'apps.articulo:articulos' %}?orden=reciente">Más reciente</a>
+        <a class="btn btn-success btn-lg" href="{% url 'apps.articulo:articulos' %}?orden=antiguo">Más antiguo</a>
+        <a class="btn btn-success btn-lg" href="{% url 'apps.articulo:articulos' %}?orden=alfabetico">Orden alfabético</a>
+        <a class="btn btn-success btn-lg" href="{% url 'apps.articulo:categoria_lista' %}">Listar todas las categorias</a>
+    </ul>
+    {% if user.is_superuser or request.user|has_group:"Colaborador"  %}
+    <div class="col d-grid">
+            <br><a class="btn btn-success btn-lg" href="{% url 'apps.articulo:articulo_crear' %}">Crear un artículo</a><br>
+            <a class="btn btn-success btn-lg" href="{% url 'apps.articulo:crear_categoria' %}">Crear nueva categoría</a>
+    </div>
+    {% endif %}
+    <div class="row text-center pt-3">
+        <div class="col-lg-6 m-auto">
+            <h1 class="h1">Artículos</h1>
+            <p>
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        {% for articulo in articulos %}
+        <div class="col-12 col-md-4 p-5 mt-3">
+          <h4 class="text-center mt-3 mb-3">{{ articulo.titulo | capfirst }}</h4>
+          <h6 class="text-center mt-6 mb-6">Fecha de Publicación: {{ articulo.fecha_publicacion }}</h6>
+          <div class="text-center mt-3 mb-3">
+            <a><img src="{{ articulo.imagen.url }}" class="rounded-circle img-fluid border" style="width: 150px; height: 150px;"></a>
+            <br>
+            <h6 class="text-center mt-1 mb-1">{{ articulo.resumen }}</h6>
+          </div>
+            <p class="text-center"><a class="btn btn-success" href="{% url 'apps.articulo:articulo_detalle' articulo.id %}">Ingresá</a></p>
+        </div>
+        {% empty %}  
+          <li>No hay articulos</li>
+        {% endfor %}
+    </div>
+
+
+    <script>
+      document.getElementById('categoria').addEventListener('change', function() {
+          var categoria = this.value;
+          if (categoria) {
+              window.location.href = '/articulos/' + categoria + '/';
+          } else {
+              window.location.href = '/articulos/';
+          }
+      });
+    </script>
+    <script>
+      function updateUrl() {
+          var categoria = document.getElementById('categoria').value;
+          var orden = document.getElementById('orden').value;
+          var fecha = document.getElementById('fecha').value;
+          
+          var url = '/articulos/';
+          if (categoria) {
+              url += categoria + '/';
+          }
+          if (orden || fecha) {
+              url += '?';
+              if (orden) {
+                  url += 'orden=' + orden;
+                  if (fecha) {
+                      url += '&';
+                  }
+              }
+              if (fecha) {
+                  url += 'fecha=' + fecha;
+              }
+          }
+          
+          window.location.href = url;
+      }
+  
+      document.getElementById('categoria').addEventListener('change', updateUrl);
+      document.getElementById('orden').addEventListener('change', updateUrl);
+      document.getElementById('fecha').addEventListener('change', updateUrl);
+    </script>
+</section>
+{% endblock %}
+
+

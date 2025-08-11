@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load colaborador_tags %}
+
+{% block contenido %}
+<center>
+{% if user.is_superuser or request.user|has_group:"Colaborador"  %}
+<div class="container-fluid" style="margin: 300px;">
+    <h1>Lista de usuarios</h1>
+    <br>
+    <ul>
+        {% for usuario in usuarios %}
+            <li style="color: black;">{{ usuario.username }} {% if usuario.username == request.user.username %} (Usted) {% endif %}</li>
+            {% if user.is_superuser or request.user|has_group:"Colaborador"  %}
+            (<a style="color: black;" 
+            href="{% url 'apps.usuario:usuario_delete' pk=usuario.id %}">Eliminar</a>)</li>
+            {% endif %}
+        {% empty %}
+            <li>No hay usuarios registrados</li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
+    <div class="container-fluid" style="margin: 300px;">
+        <h1>Solo usuarios con permisos pueden acceder a esta página</h1>
+    </div>
+{% endif %}
+</center>
+{% endblock %}
