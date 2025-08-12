@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/templatemo.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nosotros.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/contacto.css' %}">
 
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
@@ -66,7 +68,7 @@
                             <a class="nav-link" href="{% url 'index' %}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'index' %}">Acerca de nosotros</a>
+                            <a class="nav-link" href="{% url 'nosotros' %}">Acerca de nosotros</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'apps.articulo:articulos' %}">Artículos</a>

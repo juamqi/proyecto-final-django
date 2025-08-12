@@ -8,32 +8,22 @@
 {% block contenido %}
     
 
- <div class="container-fluid bg-light py-5">
-    <div class="col-md-6 m-auto text-center">
-        <h1 class="h1">Contáctanos</h1>
-        <p>
-            Cualquier duda o sugerencia puedes hacerla desde aquí. Estamos para ayudarte
+<div class="contacto-pagina">
+    <h1 class="titulo-principal">Contáctanos</h1>
+
+    <div class="contacto-contenedor">
+        <h2 class="titulo-formulario">Escribinos</h2>
+        <p class="descripcion-formulario">
+            ¿Te apasiona la Inteligencia Artificial? ¿Te gustaría descubrir cómo puede transformar nuestro futuro? ¡Hablemos de IA! Contáctame para colaborar juntos.
         </p>
-    </div>
-</div>
 
-
-<div class="container py-5">
-    <div class="row py-5">
-        <h1>{{ mensaje }}</h1>
-        <form action="" class="col-md-9 m-auto" method="POST" role="form">
+        <form method="POST" role="form">
             {% csrf_token %}
-            <div class="row">
-
-
-                {{ form | crispy }}
-                
+            <div class="form-campos">
+                {{ form|crispy }}
             </div>
-
-            <div class="row">
-                <div class="col text-end mt-2">
-                    <button type="submit" class="btn btn-success btn-lg px-3">Enviar</button>
-                </div>
+            <div class="boton-enviar">
+                <button type="submit" class="btn-enviar">Enviar</button>
             </div>
         </form>
     </div>
