@@ -293,7 +293,7 @@
         left: 0;
         right: 0;
         background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.8) 70%, rgba(0, 0, 0, 0.95) 100%);
-        padding: 60px 25px 25px; 
+        padding: 60px 25px 25px;
         color: white;
         backdrop-filter: blur(4px);
     }
@@ -304,7 +304,8 @@
         font-size: 22px;
         margin-bottom: 12px;
         line-height: 1.2;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8); /* Sombra para mejor legibilidad */
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        /* Sombra para mejor legibilidad */
     }
 
     .article-description {
@@ -314,7 +315,8 @@
         line-height: 1.4;
         margin-bottom: 15px;
         opacity: 0.95;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); /* Sombra para mejor legibilidad */
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+        /* Sombra para mejor legibilidad */
     }
 
     .read-more {
@@ -324,7 +326,8 @@
         text-decoration: none;
         font-size: 14px;
         transition: color 0.3s ease;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); /* Sombra para mejor legibilidad */
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+        /* Sombra para mejor legibilidad */
     }
 
     .read-more:hover {
@@ -346,19 +349,19 @@
 
     .article-card.main-article .article-content {
         background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.1) 10%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.95) 100%);
-        backdrop-filter: blur(4px); 
+        backdrop-filter: blur(4px);
     }
 
     .article-card.main-article .article-title {
         font-size: 28px;
         margin-bottom: 16px;
-        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9); 
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
     }
 
     .article-card.main-article .article-description {
         font-size: 16px;
         margin-bottom: 20px;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9); 
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
     }
 
     .article-card.main-article .read-more {
@@ -373,7 +376,7 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        position: relative; 
+        position: relative;
     }
 
     .news-sidebar-title {
@@ -398,13 +401,13 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: 60px; 
-        background: linear-gradient(to bottom, 
-            transparent 0%, 
-            rgba(255, 255, 255, 0.3) 30%, 
-            rgba(255, 255, 255, 0.7) 60%, 
-            rgba(255, 255, 255, 0.9) 80%, 
-            white 100%);
+        height: 60px;
+        background: linear-gradient(to bottom,
+                transparent 0%,
+                rgba(255, 255, 255, 0.3) 30%,
+                rgba(255, 255, 255, 0.7) 60%,
+                rgba(255, 255, 255, 0.9) 80%,
+                white 100%);
         pointer-events: none;
         z-index: 2;
         border-radius: 0 0 20px 20px;
@@ -413,7 +416,7 @@
     .news-item {
         margin-bottom: 16px;
         border-bottom: 1px solid rgba(155, 0, 255, 0.15);
-        padding-bottom: 12px; 
+        padding-bottom: 12px;
     }
 
     .news-item:last-of-type {
@@ -427,7 +430,7 @@
         font-size: 16px;
         color: #333;
         margin-right: 24px;
-        line-height: 1.3; 
+        line-height: 1.3;
         margin-bottom: 6px;
     }
 
@@ -456,7 +459,7 @@
         position: relative;
         overflow: hidden;
         flex-shrink: 0;
-        z-index: 3; 
+        z-index: 3;
     }
 
     .ver-todo-btn::before {
@@ -656,7 +659,9 @@
                         </div>
                     </div>
 
-                    <button class="ver-todo-btn">VER TODO</button>
+                    <button class="ver-todo-btn" onclick="window.location.href='{% url 'apps.articulo:articulos' %}'">
+                        VER TODO
+                    </button>
                 </div>
             </div>
         </div>
