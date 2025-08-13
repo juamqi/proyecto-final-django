@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load colaborador_tags %}
+
+<title>{% block title %}Eliminación de artículos{%endblock %}</title>
+
+{% block contenido %}
+{% if user.is_superuser or request.user|has_group:"Colaborador"  %}
+<div class="container py-5">
+    <div class="col-md-6 m-auto text-center">
+    <h1>Eliminar Artículo</h1>
+    <p>¿Está seguro de que deseas eliminar el articulo "{{ object }}"?</p>
+    <form class="col-md-5 m-auto" method="POST" role="form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col text-end mt-2">
+                <button type="submit" class="btn btn-danger btn-lg px-3">Eliminar</button>
+                <a class="btn btn-success btn-lg" id="cancelButton"><span>No, cancelar</span></a>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+{% else %}
+    <div class="container text-center">
+        <br><br><br><br>
+        <h1>Solo usuarios con permisos pueden acceder a esta página</h1>
+        <br><br><br><br>
+    </div>
+{% endif %}
+
+<script>
+    document.getElementById('cancelButton').addEventListener('click', function(event) {
+        event.preventDefault();
+        history.back();
+    });
+    </script>
+    
+{% endblock %}

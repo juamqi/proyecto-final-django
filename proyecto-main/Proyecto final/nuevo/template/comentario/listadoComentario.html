@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+{% block contenido %}
+
+  
+
+<section class="pricing">
+  {% for c in comentarios %}
+    <div class="row justify-content-md-center ">
+      <div class="php-email-form" >
+        <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+          <img src="{{ c.usuario.imagen.url }}" style="width:10%; height: 10%;" width="40" height="40" class="rounded-circle flex-shrink-0">
+          <div class="d-flex gap-2 w-100 justify-content-between">
+            <div class= "container">
+              <h6 class="mb-0">{{ c.usuario.username }}</h6>
+              <small class="opacity-50 text-nowrap">{{ c.fecha }}</small>
+              <p class="mb-0 text-break opacity-75">{{ c.texto }}</p>
+            </div>
+            <section>
+              {% if user.is_superuser %}
+                  <a style="font-size: small;" href="{% url 'apps.comentario:eliminarComentario' c.pk %}">Eliminar comentario</a>
+              {% endif %}
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% endfor %}
+</section>
+
+
+{% endblock contenido %}

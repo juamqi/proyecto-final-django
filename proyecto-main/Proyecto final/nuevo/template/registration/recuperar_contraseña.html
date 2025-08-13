@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Recuperar Contraseña{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-key me-2"></i>
+                        Recuperar Contraseña
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>¿Olvidaste tu contraseña?</strong><br>
+                        No te preocupes, ingresa tu dirección de email y te enviaremos un enlace para restablecer tu contraseña.
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">
+                                <i class="fas fa-envelope me-1"></i>Dirección de Email
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger mt-1">
+                                    {{ form.email.errors }}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                Ingresa la dirección de email que usaste para registrarte.
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-info me-2">
+                                <i class="fas fa-paper-plane me-1"></i>Enviar Email de Recuperación
+                            </button>
+                            <a href="{% url 'apps.usuario:login' %}" class="btn btn-secondary me-2">
+                                <i class="fas fa-arrow-left me-1"></i>Volver al Login
+                            </a>
+                            <a href="{% url 'index' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-home me-1"></i>Inicio
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
