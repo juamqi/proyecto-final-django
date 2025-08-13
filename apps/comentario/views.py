@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.views.generic import View, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import View, DeleteView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .models import Comentario
-from .forms import ComentarioForm
+from .forms import ComentarioForm, EditarComentarioForm
 from apps.articulo.models import Articulo
 from apps.usuario.models import Usuario
 
@@ -61,6 +61,34 @@ class AgregarComentarioView(View):
         return render(request, 'comentario/agregarComentario.html', context)
 
 
+class EditarComentarioView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comentario
+    form_class = EditarComentarioForm
+    template_name = 'comentario/editarComentario.html'
+    
+    def test_func(self):
+        """Solo el autor del comentario puede editarlo"""
+        comentario = self.get_object()
+        return comentario.usuario == self.request.user
+    
+    def get_success_url(self):
+        """Redirige al artículo después de editar el comentario"""
+        messages.success(self.request, '¡Comentario editado con éxito!')
+        return reverse_lazy('apps.articulo:articulo_detalle', kwargs={'id': self.object.articulo.id})
+    
+    def form_valid(self, form):
+        """Mensaje de éxito al editar"""
+        messages.success(self.request, '¡Comentario editado con éxito!')
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        """Agregar información adicional al contexto"""
+        context = super().get_context_data(**kwargs)
+        context['comentario'] = self.object
+        context['articulo'] = self.object.articulo
+        return context
+
+
 class DeleteComentario(DeleteView):
     model = Comentario
     template_name = 'comentario/eliminarComentario.html'
@@ -71,7 +99,7 @@ class DeleteComentario(DeleteView):
         if next_url:
             return next_url
         else:
-            return reverse_lazy('apps.articulo:articulos')
+            return reverse_lazy('apps.articulo:articulo')
 
 
 class DetalleArticuloView(View):
