@@ -14,7 +14,6 @@
         box-sizing: border-box;
     }
 
-    /* Hero Section Styles */
     .gradient-header {
         width: 100%;
         background: linear-gradient(135deg, #0a0a0c 0%, #1e0b24 40%, #140019 100%);
@@ -51,7 +50,6 @@
         line-height: 1.4;
     }
 
-    /* Main Content Styles */
     .main-content {
         background: #0a0a0c;
         min-height: 100vh;
@@ -63,7 +61,6 @@
         margin: 0 auto;
     }
 
-    /* Filter Card Styles */
     .filter-card {
         background: rgba(255, 255, 255, 0.9);
         backdrop-filter: blur(10px);
@@ -128,7 +125,6 @@
         color: rgba(255, 255, 255, 0.6) !important;
     }
 
-    /* Button Styles */
     .btn-outline-secondary {
         border: none;
         color: #666;
@@ -162,7 +158,6 @@
         box-shadow: 0 8px 25px rgba(155, 0, 255, 0.4);
     }
 
-    /* Article Card Styles */
     .article-card {
         background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(10px);
@@ -250,7 +245,6 @@
         box-shadow: 0 8px 25px rgba(155, 0, 255, 0.4);
     }
 
-    /* Meta Info Styles */
     .meta-info {
         display: flex;
         align-items: center;
@@ -265,7 +259,6 @@
         color: #9B00FF;
     }
 
-    /* Empty State */
     .empty-state {
         text-align: center;
         padding: 80px 20px;
@@ -287,7 +280,6 @@
         font-family: "Source Sans Pro", sans-serif;
     }
 
-    /* Pagination Styles */
     .pagination-custom {
         margin-top: 60px;
     }
@@ -316,7 +308,6 @@
         box-shadow: 0 4px 15px rgba(155, 0, 255, 0.4);
     }
 
-    /* Line clamp utilities */
     .line-clamp-2 {
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -332,7 +323,6 @@
     }
 </style>
 
-<!-- Encabezado -->
 <section class="gradient-header">
     <div class="container">
         <div class="row justify-content-center">
@@ -348,18 +338,15 @@
 
 <div class="main-content">
     <div class="container-custom">
-        <!-- Barra de búsqueda y filtros -->
         <div class="filter-card">
             <form method="get" id="filterForm" class="d-flex align-items-center gap-3 w-100">
 
-                <!-- Buscador -->
                 <div class="search-input flex-grow-1">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" class="form-control" placeholder="Buscar artículos..." name="search"
                         value="{{ request.GET.search }}" id="searchInput">
                 </div>
 
-                <!-- Categorías -->
                 <div class="filter-group">
                     <select name="categoria" class="form-select" id="categoriaSelect">
                         <option value="">Todas las categorías</option>
@@ -372,7 +359,6 @@
                     </select>
                 </div>
 
-                <!-- Ordenar por -->
                 <div class="filter-group">
                     <select name="orden" class="form-select" id="ordenSelect">
                         <option value="antiguedad_desc" 
@@ -397,7 +383,6 @@
             </form>
         </div>
 
-        <!-- Botones de administrador/colaborador -->
         {% if user.is_superuser or request.user|has_group:"Colaborador" %}
         <div class="row mb-4">
             <div class="col-12">
@@ -411,7 +396,6 @@
         </div>
         {% endif %}
 
-        <!-- Grid de artículos -->
         <div class="row">
             {% for articulo in articulos %}
             <div class="col-lg-4 col-md-6 mb-4">
@@ -451,7 +435,6 @@
             {% endfor %}
         </div>
 
-        <!-- Paginación -->
         {% if is_paginated %}
         <nav aria-label="Navegación de artículos">
             <ul class="pagination justify-content-center pagination-custom">
@@ -488,14 +471,12 @@
 </div>
 
 <script>
-    // Enviar formulario automáticamente al presionar Enter en búsqueda
     document.querySelector('#searchInput').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             document.getElementById('filterForm').submit();
         }
     });
 
-    // Auto-submit del formulario al cambiar filtros
     document.getElementById('categoriaSelect').addEventListener('change', function () {
         document.getElementById('filterForm').submit();
     });

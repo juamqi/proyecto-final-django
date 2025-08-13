@@ -426,7 +426,7 @@
 
     .news-title {
         font-family: 'Source Sans Pro', sans-serif;
-        font-weight: 600;
+        font-weight: 1000;
         font-size: 16px;
         color: #333;
         margin-right: 24px;
@@ -440,6 +440,12 @@
         font-size: 8px;
         color: #999;
         text-transform: lowercase;
+    }
+
+    .news-title a:link,
+    .news-title a:visited {
+        color: #333 !important;
+        text-decoration: none;
     }
 
     .ver-todo-btn {
@@ -631,37 +637,31 @@
                     <h3 class="news-sidebar-title">Lo último</h3>
 
                     <div class="news-list">
+                        {% if ultimos_posts %}
+                        {% for post in ultimos_posts %}
                         <div class="news-item">
-                            <h4 class="news-title">Google presenta un traductor en tiempo real sin conexión a internet
+                            <h4 class="news-title">
+                                <a href="{% url 'apps.articulo:articulo_detalle' post.id %}">
+                                    {{ post.titulo }}
+                                </a>
                             </h4>
-                            <p class="news-date">10 de agosto</p>
+                            <p class="news-date">{{ post.fecha_publicacion|date:"j \\d\\e F" }}</p>
                         </div>
-
-                        <div class="news-item">
-                            <h4 class="news-title">Un asistente de voz logra diagnosticar enfermedades respiratorias
-                            </h4>
-                            <p class="news-date">10 de agosto</p>
-                        </div>
-
-                        <div class="news-item">
-                            <h4 class="news-title">Nuevos semáforos inteligentes prometen reducir el tráfico un 30%</h4>
-                            <p class="news-date">10 de agosto</p>
-                        </div>
-
-                        <div class="news-item">
-                            <h4 class="news-title">Científicos entrenan una IA para identificar emociones humanas</h4>
-                            <p class="news-date">10 de agosto</p>
-                        </div>
-
-                        <div class="news-item">
-                            <h4 class="news-title">Un auto autónomo recorre 1.000 km sin intervención humana</h4>
-                            <p class="news-date">10 de agosto</p>
-                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p class="news-date">Todavía no se publicó nada.</p>
+                        {% endif %}
                     </div>
 
-                    <button class="ver-todo-btn" onclick="window.location.href='{% url 'apps.articulo:articulos' %}'">
-                        VER TODO
-                    </button>
+                    <button class="ver-todo-btn" onclick="redirigirArticulos()">
+    VER TODO
+</button>
+
+<script>
+    function redirigirArticulos() {
+        window.location.href = "{% url 'apps.articulo:articulos' %}";
+    }
+</script>
                 </div>
             </div>
         </div>
