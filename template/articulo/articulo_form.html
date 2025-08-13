@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load colaborador_tags %}
+{% load crispy_forms_tags %}
+
+
+<title>{% block title %}Creación/Edición de Artículos{%endblock %}</title>
+
+{% block contenido %}
+{% if user.is_superuser or request.user|has_group:"Colaborador"  %}
+<div class="container py-5">
+    <div class="row py-5">
+        {% if editing %}
+        <div class="row">
+            <div class="col text-end mt-2">
+                <a class="btn btn-success btn-lg" href="{% url 'apps.articulo:crear_categoria' %}?next={% url 'apps.articulo:articulo_actualizar' pk=object.id %}">Crear nueva categoría</a>
+        {% else %}
+            <a class="btn btn-success btn-lg" href="{% url 'apps.articulo:crear_categoria' %}">Crear nueva categoría</a>
+        {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row py-5">
+        <h1>{% if object.id %}Modificar{% else %}Crear{% endif %} Artículo</h1>
+        <form method="POST" enctype="multipart/form-data" id="articulo-form">
+            {% csrf_token %}
+            {{ form | crispy}}
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+    </div>
+</div>
+
+{% else %}
+    <div class="container" style="margin: 300px; text-align: justify;">
+        <center>
+            <h1>Solo usuarios con permisos pueden acceder a esta página</h1>
+        </center>
+    </div>
+{% endif %}
+{% endblock %}

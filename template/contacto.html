@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+<title>{% block title %} Contacto {% endblock title %}</title>
+
+
+{% block contenido %}
+    
+
+ <div class="container-fluid bg-light py-5">
+    <div class="col-md-6 m-auto text-center">
+        <h1 class="h1">Contáctanos</h1>
+        <p>
+            Cualquier duda o sugerencia puedes hacerla desde aquí. Estamos para ayudarte
+        </p>
+    </div>
+</div>
+
+
+<div class="container py-5">
+    <div class="row py-5">
+        <h1>{{ mensaje }}</h1>
+        <form action="" class="col-md-9 m-auto" method="POST" role="form">
+            {% csrf_token %}
+            <div class="row">
+
+
+                {{ form | crispy }}
+                
+            </div>
+
+            <div class="row">
+                <div class="col text-end mt-2">
+                    <button type="submit" class="btn btn-success btn-lg px-3">Enviar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
