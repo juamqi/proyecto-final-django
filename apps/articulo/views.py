@@ -9,28 +9,47 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 
-#Todos los artículos
+# Todos los artículos
 class ArticuloListView(ListView):
     model = Articulo
-    template_name = "articulo/articulos.html" 
-    context_object_name = "articulos" 
+    template_name = "articulo/articulos.html"
+    context_object_name = "articulos"
+    paginate_by = 6  # <-- Paginación fija
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        
+        # --- Búsqueda ---
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(titulo__icontains=search)
+        
+        # --- Filtro por categoría ---
+        categoria_id = self.request.GET.get('categoria')
+        if categoria_id:
+            queryset = queryset.filter(categoria_id=categoria_id)
+        
+        # --- Ordenamiento ---
         orden = self.request.GET.get('orden')
-        if orden == 'reciente':
-            queryset = queryset.order_by('-fecha_publicacion')
-        elif orden == 'antiguo':
+        if orden == 'antiguedad_asc':
             queryset = queryset.order_by('fecha_publicacion')
-        elif orden == 'alfabetico':
+        elif orden == 'antiguedad_desc':
+            queryset = queryset.order_by('-fecha_publicacion')
+        elif orden == 'alfabetico_asc':
             queryset = queryset.order_by('titulo')
+        elif orden == 'alfabetico_desc':
+            queryset = queryset.order_by('-titulo')
+        else:
+            # Orden por defecto
+            queryset = queryset.order_by('-fecha_publicacion')
+
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['orden'] = self.request.GET.get('orden', 'reciente')
+        context['categorias'] = Categoria.objects.all()
+        context['orden'] = self.request.GET.get('orden', 'antiguedad_desc')
         return context
-
 
 #Artículo individual
 class ArticuloDetailView(DetailView):
@@ -61,17 +80,19 @@ class ArticuloDetailView(DetailView):
             context['form'] = form
             return self.render_to_response(context)
 
-
 #Artículo creación
 class ArticuloCreateView(LoginRequiredMixin, CreateView):
     model = Articulo
     form_class = ArticuloForm
     template_name = 'articulo/articulo_form.html'
 
-    def get_success_url(self):
-            messages.success(self.request, '¡Artículo creado con éxito!')
-            return reverse_lazy('apps.articulo:articulos')
+    def form_valid(self, form):
+        form.instance.editor = self.request.user
+        messages.success(self.request, '¡Artículo creado con éxito!')
+        return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('apps.articulo:articulos')
 
 #Artículo modificación
 class ArticuloUpdateView(LoginRequiredMixin, UpdateView):
@@ -79,10 +100,12 @@ class ArticuloUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ArticuloForm
     template_name = 'articulo/articulo_form.html'
 
-    def get_success_url(self):
-            messages.success(self.request, '¡Artículo modificado con éxito!')
-            return reverse_lazy('apps.articulo:articulos')
+    def form_valid(self, form):
+        messages.success(self.request, '¡Artículo modificado con éxito!')
+        return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('apps.articulo:articulos')
 
 #Articulo borrar
 class ArticuloDeleteView(DeleteView):

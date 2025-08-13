@@ -85,6 +85,10 @@
                     <a class="btn btn-success btn-lg"
                         href="{% url 'apps.comentario:eliminarComentario' comentario.pk %}">Eliminar comentario</a>
                     {% endif %}
+                    {% if user == comentario.usuario %}
+                    <a class="btn btn-warning btn-lg"
+                        href="{% url 'apps.comentario:editarComentario' comentario.pk %}">Editar comentario</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
