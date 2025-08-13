@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mi Perfil{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #000000;
+        color: #ffffff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .profile-container {
+        background: linear-gradient(135deg, #000000, #1a1a1a);
+        min-height: 100vh;
+        padding: 2rem 0;
+    }
+    
+    .profile-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(138, 43, 226, 0.3);
+    }
+    
+    .purple-accent {
+        color: #8a2be2;
+    }
+    
+    .purple-border {
+        border-color: #8a2be2 !important;
+    }
+    
+    .purple-bg {
+        background: linear-gradient(135deg, #8a2be2, #9370db);
+    }
+    
+    .avatar-container {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 3px solid #8a2be2;
+        object-fit: cover;
+        background: linear-gradient(135deg, #8a2be2, #9370db);
+    }
+    
+    .avatar-placeholder {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 3px solid #8a2be2;
+        background: linear-gradient(135deg, #8a2be2, #9370db);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+    }
+    
+    .info-item {
+        background: rgba(138, 43, 226, 0.1);
+        border: 1px solid rgba(138, 43, 226, 0.2);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .info-item:hover {
+        background: rgba(138, 43, 226, 0.2);
+        border-color: #8a2be2;
+    }
+    
+    .info-label {
+        color: #8a2be2;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .info-value {
+        color: #ffffff;
+        font-size: 1rem;
+    }
+    
+    .btn-purple {
+        background: linear-gradient(135deg, #8a2be2, #9370db);
+        border: none;
+        color: white;
+        border-radius: 25px;
+        padding: 0.75rem 2rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-purple:hover {
+        background: linear-gradient(135deg, #9370db, #8a2be2);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        color: white;
+    }
+    
+    .btn-outline-purple {
+        background: transparent;
+        border: 2px solid #8a2be2;
+        color: #8a2be2;
+        border-radius: 25px;
+        padding: 0.75rem 2rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-outline-purple:hover {
+        background: #8a2be2;
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    .section-title {
+        color: #8a2be2;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+    }
+    
+    .decorative-shape {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border: 2px solid #8a2be2;
+        transform: rotate(45deg);
+        opacity: 0.1;
+        z-index: -1;
+    }
+    
+    .shape-1 {
+        top: 10%;
+        right: 10%;
+    }
+    
+    .shape-2 {
+        bottom: 10%;
+        left: 10%;
+        width: 150px;
+        height: 150px;
+    }
+</style>
+
+<div class="profile-container">
+    <div class="decorative-shape shape-1"></div>
+    <div class="decorative-shape shape-2"></div>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="section-title">
+                        <i class="fas fa-user-circle me-2"></i>Mi Perfil
+                    </h1>
+                    <p class="text-muted" style="color: #d4a5ff !important;">Gestiona tu información personal</p>
+                </div>
+                
+                <div class="row">
+                    <!-- Tarjeta de Avatar y Resumen -->
+                    <div class="col-md-4 mb-4">
+                        <div class="profile-card text-center">
+                            <div class="avatar-container mb-4">
+                                {% if usuario.imagen %}
+                                    <img src="{{ usuario.imagen.url }}" alt="Foto de perfil" class="avatar">
+                                {% else %}
+                                    <div class="avatar-placeholder">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <h3 class="purple-accent mb-3">
+                                {{ usuario.first_name|default:usuario.username }}
+                                {{ usuario.last_name|default:"" }}
+                            </h3>
+                            
+                            <div class="badge purple-bg text-white px-3 py-2 rounded-pill mb-4">
+                                <i class="fas fa-user me-1"></i>Usuario
+                            </div>
+                            
+                            <!-- Botón Editar Perfil removido -->
+                        </div>
+                    </div>
+                    
+                    <!-- Tarjeta de Información -->
+                    <div class="col-md-8 mb-4">
+                        <div class="profile-card">
+                            <h3 class="section-title">
+                                <i class="fas fa-info-circle me-2"></i>Información Personal
+                            </h3>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="info-item">
+                                        <div class="info-label">
+                                            <i class="fas fa-user me-2"></i>Nombre de usuario
+                                        </div>
+                                        <div class="info-value">{{ usuario.username }}</div>
+                                    </div>
+                                    
+                                    <div class="info-item">
+                                        <div class="info-label">
+                                            <i class="fas fa-envelope me-2"></i>Email
+                                        </div>
+                                        <div class="info-value">{{ usuario.email }}</div>
+                                    </div>
+                                    
+                                    <div class="info-item">
+                                        <div class="info-label">
+                                            <i class="fas fa-id-card me-2"></i>Nombre
+                                        </div>
+                                        <div class="info-value">{{ usuario.first_name|default:"No especificado" }}</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="info-item">
+                                        <div class="info-label">
+                                            <i class="fas fa-id-badge me-2"></i>Apellido
+                                        </div>
+                                        <div class="info-value">{{ usuario.last_name|default:"No especificado" }}</div>
+                                    </div>
+                                    
+                                    <div class="info-item">
+                                        <div class="info-label">
+                                            <i class="fas fa-calendar me-2"></i>Fecha de registro
+                                        </div>
+                                        <div class="info-value">{{ usuario.date_joined|date:"d/m/Y" }}</div>
+                                    </div>
+                                    
+                                    <div class="info-item">
+                                        <div class="info-label">
+                                            <i class="fas fa-clock me-2"></i>Último acceso
+                                        </div>
+                                        <div class="info-value">{{ usuario.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4" style="border-color: rgba(138, 43, 226, 0.3);">
+                            
+                            <div class="text-center">
+                                <a href="{% url 'apps.usuario:editar_perfil' %}" class="btn btn-purple me-2">
+                                    <i class="fas fa-edit me-1"></i>Editar Información
+                                </a>
+                                <a href="{% url 'apps.usuario:cambiar_password' %}" class="btn btn-outline-purple me-2">
+                                    <i class="fas fa-key me-1"></i>Cambiar Contraseña
+                                </a>
+                                <a href="{% url 'index' %}" class="btn btn-outline-purple">
+                                    <i class="fas fa-home me-1"></i>Volver al Inicio
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
