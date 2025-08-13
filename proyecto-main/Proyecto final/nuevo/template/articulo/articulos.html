@@ -90,7 +90,18 @@
         z-index: 2;
     }
 
-    .form-control,
+    .form-control {
+        background: rgba(200, 200, 200, 0.3);
+        border: none;
+        border-radius: 25px;
+        color: #333;
+        font-family: "Source Sans Pro", sans-serif;
+        padding: 12px 20px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        min-width: 180px;
+    }
+
     .form-select {
         background: rgba(200, 200, 200, 0.3);
         border: none;
@@ -101,6 +112,14 @@
         transition: all 0.3s ease;
         font-weight: 500;
         min-width: 180px;
+    }
+
+    .search-input {
+        text-align: center;
+    }
+
+    .form-select option {
+        text-align: left;
     }
 
     .form-control:focus,
@@ -351,35 +370,29 @@
                     <select name="categoria" class="form-select" id="categoriaSelect">
                         <option value="">Todas las categorías</option>
                         {% for cat in categorias %}
-                        <option value="{{ cat.id }}" 
-                                {% if cat.id|stringformat:"s" == request.GET.categoria %}selected{% endif %}>
-                            {{ cat.nombre }}
-                        </option>
+                            <option value="{{ cat.id }}" {% if cat.id|stringformat:"s" == request.GET.categoria|stringformat:"s" %}selected{% endif %}>
+                                #{{ cat.nombre }}
+                            </option>
                         {% endfor %}
                     </select>
                 </div>
 
                 <div class="filter-group">
                     <select name="orden" class="form-select" id="ordenSelect">
-                        <option value="antiguedad_desc" 
-                                {% if request.GET.orden == 'antiguedad_desc' or not request.GET.orden %}selected{% endif %}>
+                        <option value="antiguedad_desc" {% if request.GET.orden == 'antiguedad_desc' or not request.GET.orden %}selected{% endif %}>
                             Más recientes
                         </option>
-                        <option value="antiguedad_asc" 
-                                {% if request.GET.orden == 'antiguedad_asc' %}selected{% endif %}>
+                        <option value="antiguedad_asc" {% if request.GET.orden == 'antiguedad_asc' %}selected{% endif %}>
                             Más antiguos
                         </option>
-                        <option value="alfabetico_asc" 
-                                {% if request.GET.orden == 'alfabetico_asc' %}selected{% endif %}>
+                        <option value="alfabetico_asc" {% if request.GET.orden == 'alfabetico_asc' %}selected{% endif %}>
                             A-Z
                         </option>
-                        <option value="alfabetico_desc" 
-                                {% if request.GET.orden == 'alfabetico_desc' %}selected{% endif %}>
+                        <option value="alfabetico_desc" {% if request.GET.orden == 'alfabetico_desc' %}selected{% endif %}>
                             Z-A
                         </option>
                     </select>
                 </div>
-
             </form>
         </div>
 

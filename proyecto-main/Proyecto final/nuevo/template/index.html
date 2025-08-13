@@ -232,7 +232,7 @@
 
     .main-title {
         font-family: 'Orbitron', monospace;
-        font-size: 48px;
+        font-size: 36px;
         font-weight: 700;
         color: #9B00FF;
         margin-bottom: 60px;
@@ -251,18 +251,18 @@
         display: flex;
         flex-direction: column;
         gap: 30px;
-        height: 75%;
+        height: 90%;
     }
 
     .center-column {
         grid-row: 1;
-        height: 75%;
+        height: 90%;
     }
 
     .right-column {
         grid-row: 1 / -1;
         grid-column: 3;
-        height: 75%;
+        height: 90%;
     }
 
     .article-card {
@@ -271,7 +271,6 @@
         overflow: hidden;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         cursor: pointer;
-        height: 280px;
         flex: 1;
     }
 
@@ -295,7 +294,6 @@
         background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.8) 70%, rgba(0, 0, 0, 0.95) 100%);
         padding: 60px 25px 25px;
         color: white;
-        backdrop-filter: blur(4px);
     }
 
     .article-title {
@@ -305,7 +303,6 @@
         margin-bottom: 12px;
         line-height: 1.2;
         text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-        /* Sombra para mejor legibilidad */
     }
 
     .article-description {
@@ -316,7 +313,6 @@
         margin-bottom: 15px;
         opacity: 0.95;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-        /* Sombra para mejor legibilidad */
     }
 
     .read-more {
@@ -327,7 +323,6 @@
         font-size: 14px;
         transition: color 0.3s ease;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-        /* Sombra para mejor legibilidad */
     }
 
     .read-more:hover {
@@ -349,7 +344,6 @@
 
     .article-card.main-article .article-content {
         background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.1) 10%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.95) 100%);
-        backdrop-filter: blur(4px);
     }
 
     .article-card.main-article .article-title {
@@ -426,20 +420,19 @@
 
     .news-title {
         font-family: 'Source Sans Pro', sans-serif;
-        font-weight: 1000;
-        font-size: 16px;
+        font-weight: bold !important;
+        font-size: 16px !important;
         color: #333;
         margin-right: 24px;
-        line-height: 1.3;
-        margin-bottom: 6px;
+        margin-bottom: 0%;
     }
 
     .news-date {
         font-family: 'Source Sans Pro', sans-serif;
-        font-weight: 300;
-        font-size: 8px;
+        font-size: 16px !important;
         color: #999;
         text-transform: lowercase;
+        margin-bottom: 2px;
     }
 
     .news-title a:link,
@@ -451,7 +444,7 @@
     .ver-todo-btn {
         background: linear-gradient(135deg, #9B00FF 0%, #7a00cc 100%);
         border-radius: 25px;
-        padding: 16px 32px;
+        padding: 16px;
         border: none;
         font-family: 'Source Sans Pro', sans-serif;
         font-weight: 700;
@@ -593,7 +586,7 @@
         <div class="content-grid">
             <div class="left-column">
                 <div class="article-card">
-                    <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=500&h=300&fit=crop"
+                    <img src="https://images.unsplash.com/photo-1554523449-209945dde0c7?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Aula inteligente" class="article-image">
                     <div class="article-content">
                         <h2 class="article-title">el aula inteligente</h2>
@@ -606,7 +599,7 @@
                 </div>
 
                 <div class="article-card">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=300&fit=crop"
+                    <img src="https://ar-media.hptiendaenlinea.com/magefan_blog/IA_EN_EL_HOGAR_HERO.jpg"
                         alt="IA en casa" class="article-image">
                     <div class="article-content">
                         <h2 class="article-title">IA en la cocina, el baño y el living</h2>
@@ -620,7 +613,7 @@
 
             <div class="center-column">
                 <div class="article-card main-article">
-                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=600&h=450&fit=crop"
+                    <img src="https://images.unsplash.com/photo-1569087682520-45253cc2e0ee?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Asistentes virtuales" class="article-image">
                     <div class="article-content">
                         <h2 class="article-title">¿asistentes o espías?</h2>
@@ -654,14 +647,14 @@
                     </div>
 
                     <button class="ver-todo-btn" onclick="redirigirArticulos()">
-    VER TODO
-</button>
+                        VER TODO
+                    </button>
 
-<script>
-    function redirigirArticulos() {
-        window.location.href = "{% url 'apps.articulo:articulos' %}";
-    }
-</script>
+                    <script>
+                        function redirigirArticulos() {
+                            window.location.href = "{% url 'apps.articulo:articulos' %}";
+                        }
+                    </script>
                 </div>
             </div>
         </div>

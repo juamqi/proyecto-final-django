@@ -5,126 +5,511 @@
 
 <title>{% block title %}Artículo: {{ articulos.titulo | capfirst }} {%endblock %}</title>
 
+{% block extra_css %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@300;400;700&display=swap');
+
+    body {
+        background: #0a0a0c;
+        color: #fff;
+        font-family: "Source Sans Pro", sans-serif;
+    }
+
+    .gradient-header {
+        padding: 64px 0 0 0;
+    }
+
+    .gradient-header .row {
+        justify-content: center;
+    }
+
+    .gradient-header .col-lg-10 {
+        text-align: left;
+    }
+
+    .article-title {
+        font-family: 'Orbitron', monospace;
+        font-size: 32px;
+        font-weight: 700;
+        color: #FFF;
+        text-shadow: 0 0 20px rgba(155, 0, 255, 0.3);
+        margin-bottom: 20px;
+        line-height: 1.3;
+        text-align: left;
+    }
+
+    .article-container {
+        padding-top: 20px;
+    }
+
+    .article-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(155, 0, 255, 0.2);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .article-image {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .article-content {
+        padding: 40px;
+    }
+
+    .article-title {
+        font-family: 'Orbitron', monospace;
+        font-size: 32px;
+        font-weight: 700;
+        color: #FFF;
+        text-shadow: 0 0 20px rgba(155, 0, 255, 0.3);
+        margin-bottom: 20px;
+        line-height: 1.3;
+        text-align: left;
+    }
+
+    .article-meta {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(155, 0, 255, 0.2);
+    }
+
+    .category-badge {
+        background: linear-gradient(135deg, #9B00FF 0%, #7a00cc 100%);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .category-badge:hover {
+        background: linear-gradient(135deg, #8500e6 0%, #6600aa 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(155, 0, 255, 0.4);
+        color: white;
+        text-decoration: none;
+    }
+
+    .category-badge:focus {
+        color: white;
+        text-decoration: none;
+        outline: 2px solid rgba(155, 0, 255, 0.5);
+        outline-offset: 2px;
+    }
+
+    .article-summary {
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 30px;
+        padding: 20px;
+        background: rgba(155, 0, 255, 0.05);
+        border-left: 4px solid #9B00FF;
+        border-radius: 0 10px 10px 0;
+        font-weight: 300;
+        line-height: 1.6;
+    }
+
+    .article-text {
+        font-size: 16px;
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 40px;
+        font-weight: 300;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+
+    .btn-modern {
+        background: linear-gradient(135deg, #9B00FF 0%, #7a00cc 100%);
+        border: none;
+        border-radius: 25px;
+        font-family: "Source Sans Pro", sans-serif;
+        font-weight: 700;
+        padding: 12px 24px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 14px;
+        text-decoration: none;
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-modern:hover {
+        background: linear-gradient(135deg, #8500e6 0%, #6600aa 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(155, 0, 255, 0.4);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
+    }
+
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #ff3742 0%, #ff2f3a 100%);
+        box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+    }
+
+    .comments-section {
+        padding: 80px 0;
+        position: relative;
+    }
+
+    .comments-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+    }
+
+    .section-title {
+        font-family: 'Orbitron', monospace;
+        font-size: 36px;
+        font-weight: 700;
+        color: #9B00FF;
+        text-shadow: 0 0 20px rgba(155, 0, 255, 0.3);
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .section-subtitle {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.7);
+        text-align: center;
+        margin-bottom: 60px;
+        font-weight: 300;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .comment-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(155, 0, 255, 0.2);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .comment-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(155, 0, 255, 0.2);
+        border-color: rgba(155, 0, 255, 0.3);
+    }
+
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(155, 0, 255, 0.1);
+    }
+
+    .comment-author {
+        font-weight: 600;
+        color: #9B00FF;
+        font-size: 16px;
+    }
+
+    .comment-date {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 300;
+    }
+
+    .comment-text {
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-weight: 300;
+    }
+
+    .comment-form-container {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(155, 0, 255, 0.15);
+        border-radius: 20px;
+        padding: 40px;
+        margin-top: 40px;
+    }
+
+    .form-title {
+        font-family: 'Orbitron', monospace;
+        font-size: 16px;
+        font-weight: 100;
+        color: #FFF;
+        text-align: left;
+        margin-bottom: 36px;
+    }
+
+    .form-control {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(155, 0, 255, 0.3);
+        border-radius: 10px;
+        color: #fff;
+        font-family: "Source Sans Pro", sans-serif;
+        padding: 15px;
+        transition: all 0.3s ease;
+        font-weight: 300;
+    }
+
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: #9B00FF;
+        box-shadow: 0 0 0 0.2rem rgba(155, 0, 255, 0.25);
+        color: #fff;
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 300;
+    }
+
+    .empty-comments {
+        text-align: center;
+        padding: 60px 20px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .empty-comments i {
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 20px;
+        font-size: 48px;
+    }
+
+    .empty-comments h4 {
+        font-family: 'Orbitron', monospace;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 12px;
+    }
+
+    .login-prompt {
+        text-align: center;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 15px;
+        border: 1px solid rgba(155, 0, 255, 0.2);
+    }
+
+    .login-prompt h2 {
+        font-family: 'Orbitron', monospace;
+        color: #9B00FF;
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .article-title {
+            font-size: 24px;
+        }
+
+        .article-content {
+            padding: 25px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn-modern {
+            justify-content: center;
+        }
+
+        .article-meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block contenido %}
 
-<!-- Open Content -->
-<section class="bg-light">
-    <div class="container pb-5">
-        <div class="row">
-            <div class="col-lg-5 mt-5">
-                <div class="card mb-3">
-                    {% if articulos.imagen %}
-                        <img class="card-img img-fluid" src="{{ articulos.imagen.url }}" alt="">
-                    {% else %}
-                        <img class="img-fluid" src="{% static '/assets/img/banner_img_01.jpg' %}" alt="">
-                    {% endif %}
-                </div>
+<section class="gradient-header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h1 class="article-title">{{ articulos.titulo | capfirst }}</h1>
             </div>
-            <!-- col end -->
-            <div class="col-lg-7 mt-5">
-                <div class="card">
-                    <div class="card-body">
-                        <h1 class="h2">{{ articulos.titulo | capfirst }}</h1>
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <h6>Categoría</h6>
-                            </li>
-                            <li class="list-inline-item">
-                                <p class="text-muted"><strong>{{ articulos.categoria | capfirst }}</strong></p>
-                            </li>
-                        <p class="h6 py-2">Resumen: {{ articulos.resumen | capfirst }}</p>
-                        <h6>Contenido</h6>
-                        </ul>
-                        <p class="h3 py-2">{{ articulos.contenido | capfirst }}</p>
-                        <form action="" method="GET">
-                            <div class="row pb-3">
-                                <div class="col d-grid">
-                                    <a class="btn btn-success btn-lg" href="#comentario"><span>Comentar</span></a>
-                                </div>
-                                <!--Solo si es colaborador-->
-                                {% if user.is_superuser or request.user|has_group:"Colaborador"  %}
-                                <div class="col d-grid">
-                                    <a href="{% url 'apps.articulo:articulo_actualizar' pk=articulos.pk %}" class="btn btn-success btn-lg" value="eliminar">Editar articulo</a>
-                                </div>
-                                <!--Solo si es colaborador-->
-                                <div class="col d-grid">
-                                        <a href="{% url 'apps.articulo:articulo_eliminar' pk=articulos.pk %}" class="btn btn-success btn-lg" value="eliminar">Eliminar articulo</a>
-                                </div>  
-                                {% endif %}                                                           
-                            </div>
-                        </form>
+        </div>
+    </div>
+</section>
+
+<section class="article-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="article-card">
+                    {% if articulos.imagen %}
+                    <img class="article-image" src="{{ articulos.imagen.url }}" alt="{{ articulos.titulo }}">
+                    {% else %}
+                    <img class="article-image" src="{% static '/assets/img/banner_img_01.jpg' %}"
+                        alt="{{ articulos.titulo }}">
+                    {% endif %}
+
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <a class="category-badge" 
+                               href="{% url 'apps.articulo:articulos' %}?search=&categoria={{ articulos.categoria.pk }}&orden=antiguedad_desc"
+                               title="Ver más artículos de {{ articulos.categoria }}">
+                                <i class="fas fa-tag"></i>
+                                {{ articulos.categoria | capfirst }}
+                            </a>
+                        </div>
+
+                        {% if articulos.resumen %}
+                        <div class="article-summary">
+                            {{ articulos.resumen | capfirst }}
+                        </div>
+                        {% endif %}
+
+                        <div class="article-text">
+                            {{ articulos.contenido | capfirst }}
+                        </div>
+
+                        <div class="action-buttons">
+                            <a class="btn-modern" href="#comentario">
+                                <i class="fas fa-comment"></i>
+                                Comentar
+                            </a>
+
+                            {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+                            <a href="{% url 'apps.articulo:articulo_actualizar' pk=articulos.pk %}"
+                                class="btn-modern btn-secondary">
+                                <i class="fas fa-edit"></i>
+                                Editar Artículo
+                            </a>
+                            <a href="{% url 'apps.articulo:articulo_eliminar' pk=articulos.pk %}"
+                                class="btn-modern btn-danger">
+                                <i class="fas fa-trash"></i>
+                                Eliminar Artículo
+                            </a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Close Content -->
 
-<!-- Start Article -->
-<div class="container py-5">
-    <div class="row py-5">
-        <div class="col-md-6 m-auto text-center">
-            <h1 class="h1">Comentarios</h1>
-            <p>
-                Aquí podrás ver los comentarios de este artículo, o podrás comentar (siempre y cuando estés registrado y logueado!)
-            </p>
+<section class="comments-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h2 class="section-title">comentarios</h2>
+                <p class="section-subtitle">
+                    Aquí podrás ver los comentarios de este artículo, o podrás comentar (siempre y cuando estés
+                    registrado y logueado!)
+                </p>
 
-        <h1>{{ mensaje }}</h1>
-        {% for comentario in comentarios %}
-        <div class="p-5 pb-1">
-            <div class="product-wap card rounded-0">
-                <div class="card rounded-0 text-center mb-2">
-                    <li class="list-inline"></li>
-                        <h6>{{ comentario.usuario }} - {{ comentario.fecha }}</h6>
-                    </li>
+                {% if mensaje %}
+                <div class="alert alert-info text-center"
+                    style="background: rgba(155, 0, 255, 0.1); border: 1px solid rgba(155, 0, 255, 0.3); color: #9B00FF;">
+                    <h4>{{ mensaje }}</h4>
                 </div>
-                <div class="card-body">
-                        <p>{{ comentario.texto  }}</p>
-                    {% if user.is_superuser or request.user|has_group:"Colaborador" %}
-                    <a class="btn btn-success btn-lg"
-                        href="{% url 'apps.comentario:eliminarComentario' comentario.pk %}">Eliminar comentario</a>
+                {% endif %}
+
+                <div class="comments-list">
+                    {% for comentario in comentarios %}
+                    <div class="comment-card">
+                        <div class="comment-header">
+                            <div>
+                                <div class="comment-author">{{ comentario.usuario }}</div>
+                                <div class="comment-date">{{ comentario.fecha }}</div>
+                            </div>
+                            {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+                            <a class="btn-modern btn-danger" style="padding: 8px 16px; font-size: 12px;"
+                                href="{% url 'apps.comentario:eliminarComentario' comentario.pk %}">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="comment-text">
+                            {{ comentario.texto }}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="empty-comments">
+                        <i class="fas fa-comment-slash"></i>
+                        <h4>No hay comentarios aún</h4>
+                        <p>¡Puedes ser el primero en comentar!</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="comment-form-container" id="comentario">
+                    {% if user.is_authenticated %}
+                    <h3 class="form-title">Dejá tu comentario:</h3>
+                    <form method="POST" role="form">
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        <div class="text-center mt-4">
+                            <button class="btn-modern" type="submit">
+                                <i class="fas fa-paper-plane"></i>
+                                Enviar Comentario
+                            </button>
+                        </div>
+                    </form>
+                    {% else %}
+                    <div class="login-prompt">
+                        <h2>Debes iniciar sesión o registrarte para comentar</h2>
+                        <a class="btn-modern" href="{% url 'apps.usuario:login' %}?next={{ request.path }}#comentario">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Iniciar Sesión
+                        </a>
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                    </div>
                     {% endif %}
                 </div>
             </div>
         </div>
-
-        {% empty %}
-        <li>No hay comentarios - Puedes ser el primero en comentar!</li>
-        {% endfor %}
-        </div>
     </div>
-</div>
-        <div class="container-fluid bg-light py-5">
-        <div class="col-md-6 m-auto text-center">
-        <a id="comentario"></a>
-        <div class="comentario">
-            
-            <form action="" class="col-md-9 m-auto" method="POST" role="form">
-                
-                {% csrf_token %}
-
-                {% if user.is_authenticated %}
-                <br>
-                <h2 class="h3">Deja tu comentario</h2>
-                {{ form | crispy }}
-                    <button class="btn btn-success btn-lg" type="submit">Comentar</button>
-                {% else %}
-                    <h2>Debes iniciar sesión o registrarte para comentar</h2>
-                    <a class="btn btn-success btn-lg" href="{% url 'apps.usuario:login' %}?next={{ request.path }}#comentario">Iniciar sesión</a>
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    
-                {% endif %}
-            </form>
-        </div>
-    </div>
-        </div>
-
 </section>
 
-</div>
-</section>
-<!-- End Article -->
-
-
-{%endblock %}
+{% endblock %}
