@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/templatemo.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nosotros.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/contacto.css' %}">
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
@@ -106,11 +108,18 @@
                 id="templatemo_main_nav">
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Sobre Nosotros</a></li>
-                        <li class="nav-item"><a class="nav-link"
-                                href="{% url 'apps.articulo:articulos' %}">Artículos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'nosotros' %}">Acerca de nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'apps.articulo:articulos' %}">Artículos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">

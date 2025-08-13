@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %} Acerca de Nosotros {% endblock title %}</title>
+
+{% block contenido %}
+
+
+<div class="principal">
+
+    <div class="acerca-container">
+        <div class="intro">
+            <h1>Acerca de nosotros</h1>
+            <h2>Grupo 7 Informatorio 2025 - The Tech Titans</h2>
+            <br> 
+            <p>
+                Somos un equipo apasionado por la inteligencia artificial y su papel transformador en la sociedad. 
+                Este blog nació con la misión de acercar el mundo de la IA a todas las personas, desde curiosos 
+                que recién empiezan a explorar el tema, hasta profesionales que buscan estar al día con las últimas innovaciones.  
+                Creemos que la inteligencia artificial no es solo una tecnología, sino una herramienta capaz de 
+                cambiar industrias, resolver problemas complejos y abrir nuevas posibilidades creativas.              
+                <br><br>
+                Aquí encontrarás artículos, guías prácticas, entrevistas y análisis sobre tendencias como 
+                machine learning, deep learning, visión por computadora, procesamiento del lenguaje natural y robótica. 
+                Nos enfocamos en explicar conceptos complejos de manera clara y accesible, sin perder el rigor técnico 
+                necesario para quienes desean profundizar.  
+                <br><br>
+                Además, creemos en una IA ética y responsable. Por eso también exploramos los retos y dilemas 
+                que plantea su desarrollo: la privacidad, el impacto en el empleo, los sesgos algorítmicos 
+                y el papel que todos jugamos en construir un futuro más justo y equilibrado.  
+                <br><br>
+                Nuestro objetivo es inspirar, educar y conectar a personas interesadas en este fascinante campo. 
+                Si te apasiona la tecnología, la innovación y el futuro, este es tu lugar para aprender, 
+                debatir y crecer junto a una comunidad que comparte la misma curiosidad por descubrir hasta 
+                dónde puede llegar la inteligencia artificial.
+            </p>
+        </div>
+
+
+        <div class="equipo">
+            <div class="miembro">
+                <figure>
+                    <img src="{% static '/assets/img/jose.jpg' %}" alt="">
+                    <figcaption>Jose Ignacio Medina Duran Canton</figcaption>
+                </figure>
+            </div>
+
+            <div class="miembro">
+                <figure>
+                    <img src="{% static '/assets/img/tomas.jpg' %}" alt="">
+                    <figcaption>Tomas Ezequiel Canteros</figcaption>
+                </figure>
+            </div>
+
+            <div class="miembro">
+                <figure>
+                    <img src="{% static '/assets/img/melisa.jpg' %}" alt="">
+                    <figcaption>Melisa Martinetti</figcaption>
+                </figure>
+            </div>
+
+            <div class="miembro">
+                <figure>
+                    <img src="{% static '/assets/img/juanpablo.jpg' %}" alt="">
+                    <figcaption>Juan Pablo Miguel Cass</figcaption>
+                </figure>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}
