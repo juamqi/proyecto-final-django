@@ -87,7 +87,7 @@ class ArticuloCreateView(LoginRequiredMixin, CreateView):
     template_name = 'articulo/articulo_form.html'
 
     def form_valid(self, form):
-        form.instance.usuario = self.request.user
+        form.instance.editor = self.request.user
         messages.success(self.request, '¡Artículo creado con éxito!')
         return super().form_valid(form)
 

@@ -69,7 +69,7 @@ class UsuarioDeleteView(LoginRequiredMixin, DeleteView):
             Comentario.objects.filter(usuario=self.object).delete()
 
         if eliminar_posts:
-            Articulo.objects.filter(autor=self.object).delete()
+            Articulo.objects.filter(editor=self.object).delete()
         messages.success(request, f'Usuario {self.object.username} eliminado correctamente')
         return self.delete(request, *args, **kwargs)
 
@@ -134,4 +134,33 @@ class CambiarPasswordView(LoginRequiredMixin, UpdateView):
         self.object.save()
         messages.success(self.request, 'Contraseña cambiada correctamente.')
         return redirect(self.get_success_url())
+
+class MisPublicacionesView(LoginRequiredMixin, ListView):
+    model = Articulo
+    template_name = 'usuario/mis_publicaciones.html'
+    context_object_name = 'articulos'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Articulo.objects.filter(editor=self.request.user).order_by('-fecha_publicacion')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['usuario'] = self.request.user
+        return context
+
+
+class MisComentariosView(LoginRequiredMixin, ListView):
+    model = Comentario
+    template_name = 'usuario/mis_comentarios.html'
+    context_object_name = 'comentarios'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Comentario.objects.filter(usuario=self.request.user).order_by('-fecha')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['usuario'] = self.request.user
+        return context
 
