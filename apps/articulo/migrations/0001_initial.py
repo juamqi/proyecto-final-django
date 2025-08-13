@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='Articulo',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('titulo', models.CharField(max_length=30)),
+                ('titulo', models.CharField(max_length=100)),
                 ('resumen', models.TextField()),
                 ('contenido', models.TextField()),
                 ('fecha_publicacion', models.DateTimeField(auto_now_add=True)),

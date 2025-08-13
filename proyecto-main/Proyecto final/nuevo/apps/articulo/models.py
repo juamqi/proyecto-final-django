@@ -10,7 +10,7 @@ class Categoria(models.Model):
 
 class Articulo(models.Model):
     
-    titulo = models.CharField(max_length=30, null=False)
+    titulo = models.CharField(max_length=100, null=False)
     resumen = models.TextField(null=False)
     contenido = models.TextField(null=False)
     fecha_publicacion = models.DateTimeField(auto_now_add=True)

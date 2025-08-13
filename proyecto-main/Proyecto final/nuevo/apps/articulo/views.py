@@ -51,8 +51,6 @@ class ArticuloListView(ListView):
         context['orden'] = self.request.GET.get('orden', 'antiguedad_desc')
         return context
 
-
-
 #Artículo individual
 class ArticuloDetailView(DetailView):
     model = Articulo
@@ -82,17 +80,19 @@ class ArticuloDetailView(DetailView):
             context['form'] = form
             return self.render_to_response(context)
 
-
 #Artículo creación
 class ArticuloCreateView(LoginRequiredMixin, CreateView):
     model = Articulo
     form_class = ArticuloForm
     template_name = 'articulo/articulo_form.html'
 
-    def get_success_url(self):
-            messages.success(self.request, '¡Artículo creado con éxito!')
-            return reverse_lazy('apps.articulo:articulos')
+    def form_valid(self, form):
+        form.instance.editor = self.request.user
+        messages.success(self.request, '¡Artículo creado con éxito!')
+        return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('apps.articulo:articulos')
 
 #Artículo modificación
 class ArticuloUpdateView(LoginRequiredMixin, UpdateView):
@@ -100,10 +100,12 @@ class ArticuloUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ArticuloForm
     template_name = 'articulo/articulo_form.html'
 
-    def get_success_url(self):
-            messages.success(self.request, '¡Artículo modificado con éxito!')
-            return reverse_lazy('apps.articulo:articulos')
+    def form_valid(self, form):
+        messages.success(self.request, '¡Artículo modificado con éxito!')
+        return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('apps.articulo:articulos')
 
 #Articulo borrar
 class ArticuloDeleteView(DeleteView):

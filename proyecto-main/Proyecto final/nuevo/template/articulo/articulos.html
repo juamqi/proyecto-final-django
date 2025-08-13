@@ -371,7 +371,7 @@
                         <option value="">Todas las categorías</option>
                         {% for cat in categorias %}
                             <option value="{{ cat.id }}" {% if cat.id|stringformat:"s" == request.GET.categoria|stringformat:"s" %}selected{% endif %}>
-                                #{{ cat.nombre }}
+                                {{ cat.nombre }}
                             </option>
                         {% endfor %}
                     </select>
