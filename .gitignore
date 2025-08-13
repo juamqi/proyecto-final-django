@@ -1,0 +1,5 @@
+# blog/configuraciones/
+*.log
+*.pot
+*.pyc
+__pycache__/proyecto-main/Proyecto final/nuevo/nuevo/db.sqlite3

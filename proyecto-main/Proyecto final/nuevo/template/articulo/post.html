@@ -1,0 +1,585 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load colaborador_tags %}
+
+{% block title %}Artículo: {{ articulos.titulo | capfirst }}{% endblock %}
+
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@300;400;700&display=swap');
+
+    body {
+        background: #0a0a0c;
+        color: #fff;
+        font-family: "Source Sans Pro", sans-serif;
+    }
+
+    .article-hero {
+        position: relative;
+        background: linear-gradient(135deg, #0a0a0c 0%, #1e0b24 40%, #140019 100%);
+        padding: 80px 0 60px 0;
+        overflow: hidden;
+    }
+
+    .article-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(ellipse at center, rgba(155, 0, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+        pointer-events: none;
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s ease;
+    }
+
+    .hero-image:hover {
+        transform: scale(1.02);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .article-title {
+        font-family: 'Orbitron', monospace;
+        font-size: 42px;
+        font-weight: 700;
+        color: #FFF;
+        text-shadow: 0 0 20px rgba(155, 0, 255, 0.3);
+        margin-bottom: 20px;
+        line-height: 1.3;
+    }
+
+    .article-meta {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .category-badge {
+        background: linear-gradient(135deg, #9B00FF 0%, #7a00cc 100%);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .category-badge:hover {
+        background: linear-gradient(135deg, #8500e6 0%, #6600aa 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(155, 0, 255, 0.4);
+        color: white;
+        text-decoration: none;
+    }
+
+    .meta-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 14px;
+    }
+
+    .meta-info i {
+        color: #9B00FF;
+        width: 16px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+
+    .btn-modern {
+        background: linear-gradient(135deg, #9B00FF 0%, #7a00cc 100%);
+        border: none;
+        border-radius: 25px;
+        font-family: "Source Sans Pro", sans-serif;
+        font-weight: 700;
+        padding: 12px 24px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 14px;
+        text-decoration: none;
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-modern:hover {
+        background: linear-gradient(135deg, #8500e6 0%, #6600aa 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(155, 0, 255, 0.4);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
+    }
+
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #ff3742 0%, #ff2f3a 100%);
+        box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+    }
+
+    .article-content {
+        background: #0a0a0c;
+        padding: 80px 0;
+    }
+
+    .content-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .article-summary {
+        background: rgba(155, 0, 255, 0.05);
+        border-left: 4px solid #9B00FF;
+        border-radius: 0 15px 15px 0;
+        padding: 30px;
+        margin-bottom: 40px;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.6;
+        font-weight: 300;
+    }
+
+    .article-text {
+        font-size: 16px;
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 40px;
+        font-weight: 300;
+    }
+
+    .comments-section {
+        background: rgba(255, 255, 255, 0.02);
+        border-top: 1px solid rgba(155, 0, 255, 0.2);
+        padding: 80px 0;
+        position: relative;
+    }
+
+    .comments-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(ellipse at center, rgba(155, 0, 255, 0.05) 0%, rgba(0, 0, 0, 0) 70%);
+        pointer-events: none;
+    }
+
+    .section-title {
+        font-family: 'Orbitron', monospace;
+        font-size: 36px;
+        font-weight: 700;
+        color: #9B00FF;
+        text-shadow: 0 0 20px rgba(155, 0, 255, 0.3);
+        margin-bottom: 20px;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    .section-subtitle {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.7);
+        text-align: center;
+        margin-bottom: 60px;
+        font-weight: 300;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .comment-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(155, 0, 255, 0.2);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+    }
+
+    .comment-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(155, 0, 255, 0.2);
+        border-color: rgba(155, 0, 255, 0.3);
+    }
+
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(155, 0, 255, 0.1);
+    }
+
+    .comment-author {
+        font-weight: 600;
+        color: #9B00FF;
+        font-size: 16px;
+    }
+
+    .comment-date {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 300;
+    }
+
+    .comment-text {
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-weight: 300;
+    }
+
+    .comment-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .comment-form-container {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(155, 0, 255, 0.15);
+        border-radius: 20px;
+        padding: 40px;
+        margin-top: 40px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .form-title {
+        font-family: 'Orbitron', monospace;
+        font-size: 24px;
+        font-weight: 700;
+        color: #FFF;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .form-control {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(155, 0, 255, 0.3);
+        border-radius: 10px;
+        color: #fff;
+        font-family: "Source Sans Pro", sans-serif;
+        padding: 15px;
+        transition: all 0.3s ease;
+        font-weight: 300;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: #9B00FF;
+        box-shadow: 0 0 0 0.2rem rgba(155, 0, 255, 0.25);
+        color: #fff;
+        outline: none;
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 300;
+    }
+
+    .empty-comments {
+        text-align: center;
+        padding: 60px 20px;
+        color: rgba(255, 255, 255, 0.6);
+        position: relative;
+        z-index: 2;
+    }
+
+    .empty-comments i {
+        color: rgba(155, 0, 255, 0.3);
+        margin-bottom: 20px;
+        font-size: 48px;
+    }
+
+    .empty-comments h4 {
+        font-family: 'Orbitron', monospace;
+        color: rgba(155, 0, 255, 0.6);
+        margin-bottom: 12px;
+    }
+
+    .login-prompt {
+        text-align: center;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 15px;
+        border: 1px solid rgba(155, 0, 255, 0.2);
+        position: relative;
+        z-index: 2;
+    }
+
+    .login-prompt h2 {
+        font-family: 'Orbitron', monospace;
+        color: #9B00FF;
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
+    .success-message {
+        background: rgba(155, 0, 255, 0.1);
+        border: 1px solid rgba(155, 0, 255, 0.3);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        color: #9B00FF;
+        text-align: center;
+        font-weight: 600;
+        position: relative;
+        z-index: 2;
+    }
+
+    @media (max-width: 768px) {
+        .article-hero {
+            padding: 40px 0 30px 0;
+        }
+
+        .article-title {
+            font-size: 28px;
+        }
+
+        .hero-image {
+            height: 250px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn-modern {
+            justify-content: center;
+        }
+
+        .article-meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .comment-form-container {
+            padding: 25px;
+        }
+    }
+</style>
+
+<!-- Hero Section con Imagen del Artículo -->
+<section class="article-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="article-title">{{ articulos.titulo|capfirst }}</h1>
+                    
+                    <div class="article-meta">
+                        <a href="{% url 'apps.articulo:articulos' %}?categoria={{ articulos.categoria.id }}" 
+                           class="category-badge">
+                            <i class="fas fa-tag"></i>
+                            {{ articulos.categoria|capfirst }}
+                        </a>
+                        
+                        <div class="meta-info">
+                            <div>
+                                <i class="fas fa-calendar-alt"></i>
+                                {{ articulos.fecha_publicacion|date:"d M Y" }}
+                            </div>
+                            {% if articulos.editor %}
+                            <div>
+                                <i class="fas fa-user-edit"></i>
+                                {{ articulos.editor.username }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="#comentario" class="btn-modern">
+                            <i class="fas fa-comment"></i>
+                            Comentar
+                        </a>
+                        
+                        {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+                            <a href="{% url 'apps.articulo:articulo_actualizar' pk=articulos.pk %}" 
+                               class="btn-modern btn-secondary">
+                                <i class="fas fa-edit"></i>
+                                Editar Artículo
+                            </a>
+                            
+                            <a href="{% url 'apps.articulo:articulo_eliminar' pk=articulos.pk %}" 
+                               class="btn-modern btn-danger">
+                                <i class="fas fa-trash"></i>
+                                Eliminar Artículo
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                {% if articulos.imagen %}
+                    <img src="{{ articulos.imagen.url }}" alt="{{ articulos.titulo }}" class="hero-image">
+                {% else %}
+                    <img src="{% static 'assets/img/banner_img_01.jpg' %}" alt="Imagen por defecto" class="hero-image">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contenido del Artículo -->
+<section class="article-content">
+    <div class="container">
+        <div class="content-container">
+            {% if articulos.resumen %}
+                <div class="article-summary">
+                    <strong>Resumen:</strong> {{ articulos.resumen|capfirst }}
+                </div>
+            {% endif %}
+            
+            <div class="article-text">
+                {{ articulos.contenido|capfirst|linebreaks }}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Comentarios -->
+<section class="comments-section" id="comentario">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h2 class="section-title">Comentarios</h2>
+                <p class="section-subtitle">
+                    Aquí podrás ver los comentarios de este artículo, o podrás comentar (siempre y cuando estés registrado y logueado!)
+                </p>
+
+                {% if mensaje %}
+                    <div class="success-message">
+                        <i class="fas fa-check-circle me-2"></i>
+                        {{ mensaje }}
+                    </div>
+                {% endif %}
+
+                <!-- Lista de Comentarios -->
+                {% if comentarios %}
+                    {% for comentario in comentarios %}
+                        <div class="comment-card">
+                            <div class="comment-header">
+                                <div>
+                                    <div class="comment-author">{{ comentario.usuario }}</div>
+                                    <div class="comment-date">{{ comentario.fecha|date:"d M Y, H:i" }}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment-text">
+                                {{ comentario.texto }}
+                            </div>
+                            
+                            <div class="comment-actions">
+                                {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+                                    <a class="btn-modern btn-danger" style="padding: 8px 16px; font-size: 12px;"
+                                       href="{% url 'apps.comentario:eliminarComentario' comentario.pk %}">
+                                        <i class="fas fa-trash"></i>
+                                        Eliminar
+                                    </a>
+                                {% endif %}
+                                
+                                {% if user == comentario.usuario %}
+                                    <a class="btn-modern btn-secondary" style="padding: 8px 16px; font-size: 12px;"
+                                       href="{% url 'apps.comentario:editarComentario' comentario.pk %}">
+                                        <i class="fas fa-edit"></i>
+                                        Editar
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-comments">
+                        <i class="fas fa-comment-slash"></i>
+                        <h4>No hay comentarios aún</h4>
+                        <p>¡Puedes ser el primero en comentar!</p>
+                    </div>
+                {% endif %}
+
+                <!-- Formulario de Comentario -->
+                <div class="comment-form-container">
+                    {% if user.is_authenticated %}
+                        <h3 class="form-title">Deja tu comentario</h3>
+                        <form method="POST" role="form">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <div class="text-center">
+                                <button type="submit" class="btn-modern">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Enviar Comentario
+                                </button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <div class="login-prompt">
+                            <h2>Debes iniciar sesión o registrarte para comentar</h2>
+                            <a class="btn-modern" href="{% url 'apps.usuario:login' %}?next={{ request.path }}#comentario">
+                                <i class="fas fa-sign-in-alt"></i>
+                                Iniciar Sesión
+                            </a>
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

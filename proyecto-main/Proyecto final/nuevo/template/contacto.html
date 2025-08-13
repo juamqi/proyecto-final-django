@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+<title>{% block title %} Contacto {% endblock title %}</title>
+
+
+{% block contenido %}
+    
+
+<div class="contacto-pagina">
+    <h1 class="titulo-principal">Contáctanos</h1>
+
+    <div class="contacto-contenedor">
+        <h2 class="titulo-formulario">Escribinos</h2>
+        <p class="descripcion-formulario">
+            ¿Te apasiona la Inteligencia Artificial? ¿Te gustaría descubrir cómo puede transformar nuestro futuro? ¡Hablemos de IA! Contáctame para colaborar juntos.
+        </p>
+
+        <form method="POST" role="form">
+            {% csrf_token %}
+            <div class="form-campos">
+                {{ form|crispy }}
+            </div>
+            <div class="boton-enviar">
+                <button type="submit" class="btn-enviar">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

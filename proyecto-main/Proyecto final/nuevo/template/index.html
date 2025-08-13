@@ -1,0 +1,664 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %} Inicio {% endblock title %}</title>
+
+{% block contenido %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@300;400;700&display=swap');
+
+    .hero-section {
+        width: 100%;
+        background: linear-gradient(135deg, #0a0a0c 0%, #1e0b24 40%, #140019 100%);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 80px;
+        flex-direction: row;
+        padding: 0 0 0 80px;
+        flex-direction: row;
+    }
+
+    .hero-content {
+        flex: 1;
+        z-index: 2;
+        margin-left: 50px;
+    }
+
+    .hero-image {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        z-index: 1;
+        justify-content: flex-start;
+        position: relative;
+    }
+
+    .hero-image img {
+        width: 950px;
+        flex-shrink: 0;
+        aspect-ratio: 67/56;
+        height: auto;
+        filter: brightness(1.1) contrast(1.2);
+    }
+
+    .badge-container {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+    }
+
+    .badge-blog {
+        display: flex;
+        width: 180px;
+        height: 25px;
+        padding: 5px 38px 5px 37px;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 25px;
+        border: 0.5px solid #FFF;
+        background: transparent;
+    }
+
+    .badge-blog-text {
+        width: 105px;
+        flex-shrink: 0;
+        color: #FFF;
+        text-align: center;
+        text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: normal;
+    }
+
+    .badge-info {
+        display: inline-flex;
+        padding: 5px 33px 5px 32px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 25px;
+        background: #FFF;
+    }
+
+    .badge-info-text {
+        color: #171717;
+        text-align: center;
+        text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .future-card {
+        position: absolute;
+        display: inline-flex;
+        padding: 18px 47px 18px 46px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 25px;
+        background: rgba(155, 0, 255, 0.08);
+        margin-bottom: 32px;
+        backdrop-filter: blur(10px);
+        top: 20px;
+        left: 20px;
+        z-index: 3;
+        top: 400px;
+        left: 125px;
+        opacity: 0;
+        transform: translateY(40px);
+        animation: fadeUp 1s ease-out forwards;
+    }
+
+    @keyframes fadeUp {
+        0% {
+            transform: translateY(40px);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .future-text {
+        color: #FFF;
+        text-align: center;
+        font-family: 'Orbitron', monospace;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 32px;
+        margin: 0;
+    }
+
+    .future-text-bold {
+        color: #FFF;
+        font-family: 'Orbitron', monospace;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 32px;
+    }
+
+    .hero-title {
+        width: 408px;
+        color: #9B00FF;
+        font-family: 'Orbitron', monospace;
+        font-size: 48px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 64px;
+        margin-bottom: 16px;
+        text-shadow: 0 0 20px rgba(155, 0, 255, 0.3);
+        display: inline-block;
+    }
+
+    .hero-subtitle {
+        width: 332px;
+        color: #FFF;
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 32px;
+        margin-bottom: 32px;
+    }
+
+    .btn-destacados {
+        width: 180px;
+        height: 50px;
+        flex-shrink: 0;
+        border-radius: 1000px;
+        background: #9B00FF;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .btn-destacados:hover {
+        background: #8500e6;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(155, 0, 255, 0.4);
+    }
+
+    .btn-destacados-text {
+        color: #FFF;
+        text-align: center;
+        text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .hero-section::before {
+        background: radial-gradient(ellipse at center, rgba(155, 0, 255, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .destacados-section {
+        width: 100%;
+        min-height: 100vh;
+        background: #0a0a0c;
+        padding: 80px 40px;
+        overflow: hidden;
+    }
+
+    .container-custom {
+        max-width: 1400px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .main-title {
+        font-family: 'Orbitron', monospace;
+        font-size: 36px;
+        font-weight: 700;
+        color: #9B00FF;
+        margin-bottom: 60px;
+        text-align: left;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 380px;
+        gap: 30px;
+        align-items: stretch;
+        height: 600px;
+    }
+
+    .left-column {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        height: 90%;
+    }
+
+    .center-column {
+        grid-row: 1;
+        height: 90%;
+    }
+
+    .right-column {
+        grid-row: 1 / -1;
+        grid-column: 3;
+        height: 90%;
+    }
+
+    .article-card {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        flex: 1;
+    }
+
+    .article-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(155, 0, 255, 0.3);
+    }
+
+    .article-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+
+    .article-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.8) 70%, rgba(0, 0, 0, 0.95) 100%);
+        padding: 60px 25px 25px;
+        color: white;
+    }
+
+    .article-title {
+        font-family: 'Orbitron', monospace;
+        font-weight: 700;
+        font-size: 22px;
+        margin-bottom: 12px;
+        line-height: 1.2;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .article-description {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        opacity: 0.95;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .read-more {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: 700;
+        color: #9B00FF;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .read-more:hover {
+        color: #b820ff;
+        text-decoration: underline;
+    }
+
+    .article-card.main-article {
+        height: 100%;
+        background: linear-gradient(135deg, #1a0d2e 0%, #0f0519 100%);
+        border: 2px solid rgba(155, 0, 255, 0.2);
+        flex: none;
+    }
+
+    .article-card.main-article .article-image {
+        height: 100%;
+        opacity: 0.8;
+    }
+
+    .article-card.main-article .article-content {
+        background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.1) 10%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.95) 100%);
+    }
+
+    .article-card.main-article .article-title {
+        font-size: 28px;
+        margin-bottom: 16px;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+    }
+
+    .article-card.main-article .article-description {
+        font-size: 16px;
+        margin-bottom: 20px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    }
+
+    .article-card.main-article .read-more {
+        font-size: 16px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    }
+
+    .news-sidebar {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .news-sidebar-title {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: 900;
+        font-size: 16px;
+        color: #9B00FF;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    .news-list {
+        flex: 1;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .news-list::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: linear-gradient(to bottom,
+                transparent 0%,
+                rgba(255, 255, 255, 0.3) 30%,
+                rgba(255, 255, 255, 0.7) 60%,
+                rgba(255, 255, 255, 0.9) 80%,
+                white 100%);
+        pointer-events: none;
+        z-index: 2;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .news-item {
+        margin-bottom: 16px;
+        border-bottom: 1px solid rgba(155, 0, 255, 0.15);
+        padding-bottom: 12px;
+    }
+
+    .news-item:last-of-type {
+        margin-bottom: 20px;
+        border-bottom: none;
+    }
+
+    .news-title {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: bold !important;
+        font-size: 16px !important;
+        color: #333;
+        margin-right: 24px;
+        margin-bottom: 0%;
+    }
+
+    .news-date {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 16px !important;
+        color: #999;
+        text-transform: lowercase;
+        margin-bottom: 2px;
+    }
+
+    .news-title a:link,
+    .news-title a:visited {
+        color: #333 !important;
+        text-decoration: none;
+    }
+
+    .ver-todo-btn {
+        background: linear-gradient(135deg, #9B00FF 0%, #7a00cc 100%);
+        border-radius: 25px;
+        padding: 16px;
+        border: none;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+        z-index: 3;
+    }
+
+    .ver-todo-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .ver-todo-btn:hover::before {
+        left: 100%;
+    }
+
+    .ver-todo-btn:hover {
+        background: linear-gradient(135deg, #8500e6 0%, #6600aa 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(155, 0, 255, 0.4);
+    }
+
+    .ver-todo-btn:active {
+        transform: translateY(0);
+    }
+
+    .news-list::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .news-list::-webkit-scrollbar-track {
+        background: rgba(155, 0, 255, 0.1);
+        border-radius: 4px;
+    }
+
+    .news-list::-webkit-scrollbar-thumb {
+        background: rgba(155, 0, 255, 0.3);
+        border-radius: 4px;
+    }
+
+    .news-list::-webkit-scrollbar-thumb:hover {
+        background: rgba(155, 0, 255, 0.5);
+    }
+
+    .dot {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0;
+        animation: blinkDot 1.5s infinite;
+    }
+
+    @keyframes blinkDot {
+
+        0%,
+        100% {
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 1;
+        }
+    }
+</style>
+
+<div class="hero-section">
+    <div id="dots-container"></div>
+    <script>
+        const dotsContainer = document.getElementById('dots-container');
+        dotsContainer.style.position = 'absolute';
+        dotsContainer.style.top = 0;
+        dotsContainer.style.left = 0;
+        dotsContainer.style.width = '100%';
+        dotsContainer.style.height = '100%';
+        dotsContainer.style.pointerEvents = 'none';
+        dotsContainer.style.zIndex = 0;
+
+        for (let i = 0; i < 50; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            dot.style.top = Math.random() * 100 + '%';
+            dot.style.left = Math.random() * 100 + '%';
+            dot.style.animationDelay = (Math.random() * 1.5) + 's';
+            dotsContainer.appendChild(dot);
+        }
+    </script>
+    <div class="hero-image">
+        <div class="future-card">
+            <p class="future-text">
+                El futuro no está cerca.<br>
+                <span class="future-text-bold">Ya está acá.</span>
+            </p>
+        </div>
+        <img src="{% static '/assets/img/hero.png' %}" alt="Inteligencia Artificial">
+    </div>
+    <div class="hero-content">
+        <div class="badge-container">
+            <div class="badge-blog">
+                <span class="badge-blog-text">BLOG TECNOLÓGICO</span>
+            </div>
+            <div class="badge-info">
+                <span class="badge-info-text">@INFORMATORIO 2025</span>
+            </div>
+        </div>
+        <h1 class="hero-title">
+            <span>la inteligencia</span>
+            <span>artificial en tu</span>
+            <span>día a día</span>
+        </h1>
+        <p class="hero-subtitle">
+            Exploramos cómo la IA transforma nuestras vidas, entre avances, riesgos y oportunidades.
+        </p>
+        <a href="#section-destacados" class="btn-destacados">
+            <span class="btn-destacados-text">DESTACADOS</span>
+        </a>
+    </div>
+</div>
+
+<section id="section-destacados" class="destacados-section">
+    <div class="container-custom">
+        <h1 class="main-title">lo más destacado</h1>
+        <div class="content-grid">
+            <div class="left-column">
+                <div class="article-card">
+                    <img src="https://images.unsplash.com/photo-1554523449-209945dde0c7?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Aula inteligente" class="article-image">
+                    <div class="article-content">
+                        <h2 class="article-title">el aula inteligente</h2>
+                        <p class="article-description">
+                            De correcciones automáticas a tareas generadas por IA: ¿cómo cambia la educación con estas
+                            herramientas?
+                        </p>
+                        <a href="#" class="read-more">Leer más.</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <img src="https://ar-media.hptiendaenlinea.com/magefan_blog/IA_EN_EL_HOGAR_HERO.jpg"
+                        alt="IA en casa" class="article-image">
+                    <div class="article-content">
+                        <h2 class="article-title">IA en la cocina, el baño y el living</h2>
+                        <p class="article-description">
+                            Electrodomésticos conectados, luces automatizadas y decisiones que tu casa toma por vos.
+                        </p>
+                        <a href="#" class="read-more">Leer más.</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="center-column">
+                <div class="article-card main-article">
+                    <img src="https://images.unsplash.com/photo-1569087682520-45253cc2e0ee?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Asistentes virtuales" class="article-image">
+                    <div class="article-content">
+                        <h2 class="article-title">¿asistentes o espías?</h2>
+                        <p class="article-description">
+                            Analizamos cómo los asistentes virtuales como Alexa o Siri influyen en tu rutina… ¿y en tu
+                            privacidad?
+                        </p>
+                        <a href="#" class="read-more">Leer más.</a>
+                    </div>
+                </div>
+            </div>
+            <div class="right-column">
+                <div class="news-sidebar">
+                    <h3 class="news-sidebar-title">Lo último</h3>
+
+                    <div class="news-list">
+                        {% if ultimos_posts %}
+                        {% for post in ultimos_posts %}
+                        <div class="news-item">
+                            <h4 class="news-title">
+                                <a href="{% url 'apps.articulo:articulo_detalle' post.id %}">
+                                    {{ post.titulo }}
+                                </a>
+                            </h4>
+                            <p class="news-date">{{ post.fecha_publicacion|date:"j \\d\\e F" }}</p>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p class="news-date">Todavía no se publicó nada.</p>
+                        {% endif %}
+                    </div>
+
+                    <button class="ver-todo-btn" onclick="redirigirArticulos()">
+                        VER TODO
+                    </button>
+
+                    <script>
+                        function redirigirArticulos() {
+                            window.location.href = "{% url 'apps.articulo:articulos' %}";
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

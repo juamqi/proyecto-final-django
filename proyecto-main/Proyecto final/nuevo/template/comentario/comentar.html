@@ -1,0 +1,23 @@
+
+<h1>{{ articulo.titulo }}</h1>
+
+<p>{{ articulo.contenido }}</p>
+
+<h2>Comentarios</h2>
+{% for comentario in articulo.comentarios.all %}
+<div class="comentario">
+
+  <p><strong>{{ comentario.usuario.username }}</strong></p>
+
+  <p>{{ comentario.texto }}</p>
+
+  <p><small>{{ comentario.fecha }}</small></p>
+</div>
+{% endfor %}
+
+<h2>Deja tu comentario</h2>
+<form method="post" action="{% url 'comentar' articulo.id %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Enviar</button>
+</form>
