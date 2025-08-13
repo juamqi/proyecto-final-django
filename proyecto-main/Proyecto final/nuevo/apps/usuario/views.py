@@ -69,7 +69,11 @@ class UsuarioDeleteView(LoginRequiredMixin, DeleteView):
             Comentario.objects.filter(usuario=self.object).delete()
 
         if eliminar_posts:
+<<<<<<< HEAD
             Articulo.objects.filter(editor=self.object).delete()
+=======
+            Articulo.objects.filter(autor=self.object).delete()
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
         messages.success(request, f'Usuario {self.object.username} eliminado correctamente')
         return self.delete(request, *args, **kwargs)
 
@@ -135,6 +139,7 @@ class CambiarPasswordView(LoginRequiredMixin, UpdateView):
         messages.success(self.request, 'Contraseña cambiada correctamente.')
         return redirect(self.get_success_url())
 
+<<<<<<< HEAD
 class MisPublicacionesView(LoginRequiredMixin, ListView):
     model = Articulo
     template_name = 'usuario/mis_publicaciones.html'
@@ -164,3 +169,5 @@ class MisComentariosView(LoginRequiredMixin, ListView):
         context['usuario'] = self.request.user
         return context
 
+=======
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4

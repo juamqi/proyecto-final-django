@@ -29,6 +29,14 @@ Table of contents
 
 
 /* Typography */
+<<<<<<< HEAD
+=======
+body, ul, li, p, a, label, input, div {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px !important;
+  font-weight: 300 !important;
+}
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 .h1 {
   font-family: 'Roboto', sans-serif;
   font-size: 48px !important;

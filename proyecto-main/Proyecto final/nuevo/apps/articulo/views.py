@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 
+<<<<<<< HEAD
 # Todos los artículos
 class ArticuloListView(ListView):
     model = Articulo
@@ -43,14 +44,38 @@ class ArticuloListView(ListView):
             # Orden por defecto
             queryset = queryset.order_by('-fecha_publicacion')
 
+=======
+#Todos los artículos
+class ArticuloListView(ListView):
+    model = Articulo
+    template_name = "articulo/articulos.html" 
+    context_object_name = "articulos" 
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        orden = self.request.GET.get('orden')
+        if orden == 'reciente':
+            queryset = queryset.order_by('-fecha_publicacion')
+        elif orden == 'antiguo':
+            queryset = queryset.order_by('fecha_publicacion')
+        elif orden == 'alfabetico':
+            queryset = queryset.order_by('titulo')
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+<<<<<<< HEAD
         context['categorias'] = Categoria.objects.all()
         context['orden'] = self.request.GET.get('orden', 'antiguedad_desc')
         return context
 
+=======
+        context['orden'] = self.request.GET.get('orden', 'reciente')
+        return context
+
+
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 #Artículo individual
 class ArticuloDetailView(DetailView):
     model = Articulo
@@ -80,12 +105,17 @@ class ArticuloDetailView(DetailView):
             context['form'] = form
             return self.render_to_response(context)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 #Artículo creación
 class ArticuloCreateView(LoginRequiredMixin, CreateView):
     model = Articulo
     form_class = ArticuloForm
     template_name = 'articulo/articulo_form.html'
 
+<<<<<<< HEAD
     def form_valid(self, form):
         form.instance.editor = self.request.user
         messages.success(self.request, '¡Artículo creado con éxito!')
@@ -93,6 +123,12 @@ class ArticuloCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('apps.articulo:articulos')
+=======
+    def get_success_url(self):
+            messages.success(self.request, '¡Artículo creado con éxito!')
+            return reverse_lazy('apps.articulo:articulos')
+
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 
 #Artículo modificación
 class ArticuloUpdateView(LoginRequiredMixin, UpdateView):
@@ -100,12 +136,19 @@ class ArticuloUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ArticuloForm
     template_name = 'articulo/articulo_form.html'
 
+<<<<<<< HEAD
     def form_valid(self, form):
         messages.success(self.request, '¡Artículo modificado con éxito!')
         return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('apps.articulo:articulos')
+=======
+    def get_success_url(self):
+            messages.success(self.request, '¡Artículo modificado con éxito!')
+            return reverse_lazy('apps.articulo:articulos')
+
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 
 #Articulo borrar
 class ArticuloDeleteView(DeleteView):

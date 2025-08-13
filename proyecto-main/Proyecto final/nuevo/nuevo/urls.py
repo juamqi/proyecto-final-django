@@ -30,7 +30,10 @@ urlpatterns = [
     path('', include('apps.contacto.urls')),
     path('', include('apps.usuario.urls')),
     path('', include('apps.comentario.urls')),
+<<<<<<< HEAD
     path('', include('apps.nosotros.urls')),
+=======
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
     path('accounts/', include('django.contrib.auth.urls')),
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += staticfiles_urlpatterns() 

@@ -178,6 +178,7 @@
                 <div class="row">
                     <!-- Tarjeta de Avatar y Resumen -->
                     <div class="col-md-4 mb-4">
+<<<<<<< HEAD
                         <div class="profile-card text-center" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                             <div>
                                 <div class="avatar-container mb-4">
@@ -209,6 +210,29 @@
                                     <i class="fas fa-comments me-1"></i>Ver Mis Comentarios
                                 </a>
                             </div>
+=======
+                        <div class="profile-card text-center">
+                            <div class="avatar-container mb-4">
+                                {% if usuario.imagen %}
+                                    <img src="{{ usuario.imagen.url }}" alt="Foto de perfil" class="avatar">
+                                {% else %}
+                                    <div class="avatar-placeholder">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <h3 class="purple-accent mb-3">
+                                {{ usuario.first_name|default:usuario.username }}
+                                {{ usuario.last_name|default:"" }}
+                            </h3>
+                            
+                            <div class="badge purple-bg text-white px-3 py-2 rounded-pill mb-4">
+                                <i class="fas fa-user me-1"></i>Usuario
+                            </div>
+                            
+                            <!-- Botón Editar Perfil removido -->
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
                         </div>
                     </div>
                     

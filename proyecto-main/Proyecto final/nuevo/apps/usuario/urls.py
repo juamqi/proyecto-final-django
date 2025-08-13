@@ -1,6 +1,11 @@
 from django.urls import path
+<<<<<<< HEAD
 from django.contrib.auth import views as auth_views
 from .views import RegistrarUsuario, LoginUsuario, LogoutUsuario, UsuarioListView, UsuarioDeleteView, MyPasswordResetView, PerfilUsuarioView, EditarPerfilView, CambiarPasswordView, MisPublicacionesView, MisComentariosView
+=======
+from .views import *
+from django.contrib.auth import views as auth_views
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 
 app_name = 'apps.usuario'
 
@@ -17,6 +22,9 @@ urlpatterns = [
     path('perfil/', PerfilUsuarioView.as_view(), name='perfil'),
     path('perfil/editar/', EditarPerfilView.as_view(), name='editar_perfil'),
     path('perfil/cambiar-password/', CambiarPasswordView.as_view(), name='cambiar_password'),
+<<<<<<< HEAD
     path('perfil/mis-publicaciones/', MisPublicacionesView.as_view(), name='mis_publicaciones'),
     path('perfil/mis-comentarios/', MisComentariosView.as_view(), name='mis_comentarios'),
+=======
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 ]

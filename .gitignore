@@ -2,4 +2,8 @@
 *.log
 *.pot
 *.pyc
+<<<<<<< HEAD
 __pycache__/proyecto-main/Proyecto final/nuevo/nuevo/db.sqlite3
+=======
+__pycache__/
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4

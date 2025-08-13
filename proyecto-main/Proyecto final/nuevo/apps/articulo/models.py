@@ -10,7 +10,11 @@ class Categoria(models.Model):
 
 class Articulo(models.Model):
     
+<<<<<<< HEAD
     titulo = models.CharField(max_length=100, null=False)
+=======
+    titulo = models.CharField(max_length=30, null=False)
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
     resumen = models.TextField(null=False)
     contenido = models.TextField(null=False)
     fecha_publicacion = models.DateTimeField(auto_now_add=True)

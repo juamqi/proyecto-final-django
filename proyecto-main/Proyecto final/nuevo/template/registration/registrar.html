@@ -2,6 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+<<<<<<< HEAD
 {% block title %}Registro de Usuario{% endblock %}
 
 {% block content %}
@@ -294,4 +295,36 @@
         </div>
     </div>
 </div>
+=======
+<title>{% block title %} Registro de usuario {% endblock title %}</title>
+
+{% block contenido %}
+
+<div class="container-fluid bg-light py-5">
+    <div class="col-md-6 m-auto text-center">
+        <h1 class="h1">Registro de usuarios</h1>
+        <p>
+            Muchas gracias por registrarte con nosotros. A continuación te pedimos por favor completa los campos.
+        </p>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row py-5">
+        <form action="{{ action_url }}" class="col-md-9 m-auto" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                {{ form | crispy }}
+            </div>
+            <div class="row">
+                <div class="col text-end mt-2">
+                    <button type="submit" class="btn btn-success btn-lg px-3">Registrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 {% endblock %}
