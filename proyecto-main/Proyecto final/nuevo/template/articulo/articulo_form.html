@@ -3,6 +3,375 @@
 {% load colaborador_tags %}
 {% load crispy_forms_tags %}
 
+<<<<<<< HEAD
+{% block title %}{% if object.id %}Modificar{% else %}Crear{% endif %} Artículo{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #000000;
+        color: #ffffff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .article-container {
+        background: linear-gradient(135deg, #000000, #1a1a1a);
+        min-height: 100vh;
+        padding: 2rem 0;
+    }
+    
+    .article-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        border-radius: 20px;
+        padding: 3rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 2rem;
+    }
+    
+    .article-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(138, 43, 226, 0.3);
+    }
+    
+    .purple-accent {
+        color: #8a2be2;
+    }
+    
+    .purple-border {
+        border-color: #8a2be2 !important;
+    }
+    
+    .purple-bg {
+        background: linear-gradient(135deg, #8a2be2, #9370db);
+    }
+    
+    .article-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+    
+    .article-title {
+        color: #8a2be2;
+        font-weight: 600;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .article-subtitle {
+        color: #cccccc;
+        font-size: 1.1rem;
+        margin-bottom: 0;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-control, .form-select, textarea, input[type="text"], input[type="file"], input[type="date"] {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        border-radius: 10px;
+        color: #ffffff;
+        padding: 1rem 1.2rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .form-control:focus, .form-select:focus, textarea:focus, input[type="text"]:focus, input[type="file"]:focus, input[type="date"]:focus {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: #8a2be2;
+        box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.25);
+        color: #ffffff;
+        outline: none;
+    }
+    
+    .form-control::placeholder, textarea::placeholder {
+        color: #888888;
+    }
+    
+    /* Estilos específicos para el select */
+    select.form-control, .form-select {
+        color: #ffffff !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .form-label {
+        color: #8a2be2;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    
+    .btn-purple {
+        background: linear-gradient(135deg, #8a2be2, #9370db);
+        border: none;
+        color: white;
+        border-radius: 25px;
+        padding: 1rem 2rem;
+        font-weight: 500;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .btn-purple:hover {
+        background: linear-gradient(135deg, #9370db, #8a2be2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+        color: white;
+    }
+    
+    .btn-outline-purple {
+        background: transparent;
+        border: 2px solid #8a2be2;
+        color: #8a2be2;
+        border-radius: 25px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0.5rem;
+    }
+    
+    .btn-outline-purple:hover {
+        background: #8a2be2;
+        color: white;
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
+    
+    .decorative-shape {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        border: 2px solid #8a2be2;
+        transform: rotate(45deg);
+        opacity: 0.1;
+        z-index: -1;
+    }
+    
+    .shape-1 {
+        top: 15%;
+        right: 15%;
+    }
+    
+    .shape-2 {
+        bottom: 15%;
+        left: 15%;
+        width: 100px;
+        height: 100px;
+    }
+    
+    .icon-container {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #8a2be2, #9370db);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        color: white;
+    }
+    
+    .category-actions {
+        background: rgba(138, 43, 226, 0.1);
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .category-actions h5 {
+        color: #8a2be2;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+    
+    .form-actions {
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(138, 43, 226, 0.3);
+    }
+    
+    .row {
+        margin: 0 -0.5rem;
+    }
+    
+    .col-md-6 {
+        padding: 0 0.5rem;
+    }
+    
+    .file-input-container {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+    
+    .file-input-label {
+        display: block;
+        padding: 1rem;
+        background: rgba(138, 43, 226, 0.1);
+        border: 2px dashed rgba(138, 43, 226, 0.3);
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .file-input-label:hover {
+        background: rgba(138, 43, 226, 0.2);
+        border-color: #8a2be2;
+    }
+    
+    .file-input {
+        position: absolute;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+    
+    .preview-image {
+        max-width: 200px;
+        max-height: 200px;
+        border-radius: 10px;
+        margin-top: 1rem;
+        border: 2px solid rgba(138, 43, 226, 0.3);
+    }
+</style>
+
+{% if user.is_superuser or request.user|has_group:"Colaborador" %}
+<div class="article-container">
+    <div class="decorative-shape shape-1"></div>
+    <div class="decorative-shape shape-2"></div>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-md-12">
+                <div class="article-card">
+                    <div class="article-header">
+                        <div class="icon-container">
+                            <i class="fas fa-{% if object.id %}edit{% else %}plus{% endif %}"></i>
+                        </div>
+                        <h1 class="article-title">
+                            {% if object.id %}Modificar{% else %}Crear{% endif %} Artículo
+                        </h1>
+                        <p class="article-subtitle">
+                            {% if object.id %}
+                                Edita la información de tu artículo
+                            {% else %}
+                                Comparte tu conocimiento con la comunidad
+                            {% endif %}
+                        </p>
+                    </div>
+                    
+                    <div class="category-actions">
+                        <h5><i class="fas fa-tags me-2"></i>Gestión de Categorías</h5>
+                        {% if editing %}
+                            <a class="btn btn-outline-purple" href="{% url 'apps.articulo:crear_categoria' %}?next={% url 'apps.articulo:articulo_actualizar' pk=object.id %}">
+                                <i class="fas fa-plus me-2"></i>Crear Nueva Categoría
+                            </a>
+                        {% else %}
+                            <a class="btn btn-outline-purple" href="{% url 'apps.articulo:crear_categoria' %}">
+                                <i class="fas fa-plus me-2"></i>Crear Nueva Categoría
+                            </a>
+                        {% endif %}
+                        <a class="btn btn-outline-purple" href="{% url 'apps.articulo:categoria_lista' %}">
+                            <i class="fas fa-list me-2"></i>Ver Todas las Categorías
+                        </a>
+                    </div>
+                    
+                    <form method="POST" enctype="multipart/form-data" id="articulo-form">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.titulo.id_for_label }}" class="form-label">
+                                        <i class="fas fa-heading me-2"></i>Título del Artículo
+                                    </label>
+                                    {{ form.titulo }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.categoria.id_for_label }}" class="form-label">
+                                        <i class="fas fa-tag me-2"></i>Categoría
+                                    </label>
+                                    {{ form.categoria }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.resumen.id_for_label }}" class="form-label">
+                                <i class="fas fa-align-left me-2"></i>Resumen
+                            </label>
+                            {{ form.resumen }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.contenido.id_for_label }}" class="form-label">
+                                <i class="fas fa-file-text me-2"></i>Contenido Completo
+                            </label>
+                            {{ form.contenido }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.imagen.id_for_label }}" class="form-label">
+                                <i class="fas fa-image me-2"></i>Imagen del Artículo
+                            </label>
+                            <div class="file-input-container">
+                                <label class="file-input-label">
+                                    <i class="fas fa-cloud-upload-alt me-2"></i>
+                                    <span id="file-name">Seleccionar archivo</span>
+                                    {{ form.imagen }}
+                                </label>
+                            </div>
+                            {% if object.imagen %}
+                                <div class="mt-3">
+                                    <p class="text-muted">Imagen actual:</p>
+                                    <img src="{{ object.imagen.url }}" alt="Imagen actual" class="preview-image">
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Por favor, corrige los errores en el formulario
+                            </div>
+                        {% endif %}
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-purple">
+                                <i class="fas fa-save me-2"></i>
+                                {% if object.id %}Actualizar{% else %}Crear{% endif %} Artículo
+                            </button>
+                            
+                            {% if object.id %}
+                                <a href="{% url 'apps.articulo:articulo_detalle' id=object.id %}" class="btn btn-outline-purple">
+                                    <i class="fas fa-eye me-2"></i>Ver Artículo
+                                </a>
+                            {% endif %}
+                            
+                            <a href="{% url 'apps.articulo:articulos' %}" class="btn btn-outline-purple">
+                                <i class="fas fa-arrow-left me-2"></i>Volver a Artículos
+                            </a>
+                        </div>
+                    </form>
+                </div>
+=======
 
 <title>{% block title %}Creación/Edición de Artículos{%endblock %}</title>
 
@@ -17,11 +386,52 @@
         {% else %}
             <a class="btn btn-success btn-lg" href="{% url 'apps.articulo:crear_categoria' %}">Crear nueva categoría</a>
         {% endif %}
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
             </div>
         </div>
     </div>
 </div>
 
+<<<<<<< HEAD
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.querySelector('input[type="file"]');
+    const fileName = document.getElementById('file-name');
+    
+    if (fileInput) {
+        fileInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                fileName.textContent = e.target.files[0].name;
+            } else {
+                fileName.textContent = 'Seleccionar archivo';
+            }
+        });
+    }
+});
+</script>
+
+{% else %}
+<div class="article-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10 col-sm-12">
+                <div class="article-card text-center">
+                    <div class="icon-container">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h1 class="article-title">Acceso Restringido</h1>
+                    <p class="article-subtitle">
+                        Solo usuarios con permisos pueden acceder a esta página.
+                    </p>
+                    <a href="{% url 'apps.articulo:articulos' %}" class="btn btn-outline-purple">
+                        <i class="fas fa-arrow-left me-2"></i>Volver a Artículos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+=======
 <div class="container">
     <div class="row py-5">
         <h1>{% if object.id %}Modificar{% else %}Crear{% endif %} Artículo</h1>
@@ -39,5 +449,6 @@
             <h1>Solo usuarios con permisos pueden acceder a esta página</h1>
         </center>
     </div>
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 {% endif %}
 {% endblock %}

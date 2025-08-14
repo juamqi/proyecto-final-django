@@ -1,4 +1,271 @@
 {% extends 'base.html' %}
+<<<<<<< HEAD
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Crear Nueva Categoría{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #000000;
+        color: #ffffff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .category-container {
+        background: linear-gradient(135deg, #000000, #1a1a1a);
+        min-height: 100vh;
+        padding: 2rem 0;
+        display: flex;
+        align-items: center;
+    }
+    
+    .category-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        border-radius: 20px;
+        padding: 3rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(138, 43, 226, 0.3);
+    }
+    
+    .purple-accent {
+        color: #8a2be2;
+    }
+    
+    .purple-border {
+        border-color: #8a2be2 !important;
+    }
+    
+    .purple-bg {
+        background: linear-gradient(135deg, #8a2be2, #9370db);
+    }
+    
+    .category-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+    
+    .category-title {
+        color: #8a2be2;
+        font-weight: 600;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .category-subtitle {
+        color: #cccccc;
+        font-size: 1.1rem;
+        margin-bottom: 0;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-control {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        border-radius: 10px;
+        color: #ffffff;
+        padding: 1rem 1.2rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: #8a2be2;
+        box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.25);
+        color: #ffffff;
+    }
+    
+    .form-control::placeholder {
+        color: #888888;
+    }
+    
+    .form-label {
+        color: #8a2be2;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    
+    .btn-purple {
+        background: linear-gradient(135deg, #8a2be2, #9370db);
+        border: none;
+        color: white;
+        border-radius: 25px;
+        padding: 1rem 2rem;
+        font-weight: 500;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+    
+    .btn-purple:hover {
+        background: linear-gradient(135deg, #9370db, #8a2be2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+        color: white;
+    }
+    
+    .btn-outline-purple {
+        background: transparent;
+        border: 2px solid #8a2be2;
+        color: #8a2be2;
+        border-radius: 25px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0.5rem;
+    }
+    
+    .btn-outline-purple:hover {
+        background: #8a2be2;
+        color: white;
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
+    
+    .category-actions {
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(138, 43, 226, 0.3);
+    }
+    
+    .decorative-shape {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        border: 2px solid #8a2be2;
+        transform: rotate(45deg);
+        opacity: 0.1;
+        z-index: -1;
+    }
+    
+    .shape-1 {
+        top: 15%;
+        right: 15%;
+    }
+    
+    .shape-2 {
+        bottom: 15%;
+        left: 15%;
+        width: 100px;
+        height: 100px;
+    }
+    
+    .icon-container {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #8a2be2, #9370db);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        color: white;
+    }
+    
+    .info-box {
+        background: rgba(138, 43, 226, 0.1);
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        text-align: left;
+    }
+    
+    .info-box h5 {
+        color: #8a2be2;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+    
+    .info-box p {
+        color: #cccccc;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+</style>
+
+<div class="category-container">
+    <div class="decorative-shape shape-1"></div>
+    <div class="decorative-shape shape-2"></div>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-12">
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="icon-container">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <h1 class="category-title">Crear Nueva Categoría</h1>
+                        <p class="category-subtitle">Organiza tus artículos por temas</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h5><i class="fas fa-info-circle me-2"></i>¿Por qué crear categorías?</h5>
+                        <p>Las categorías te ayudan a:</p>
+                        <ul style="color: #cccccc; padding-left: 1.5rem;">
+                            <li>Organizar mejor tu contenido</li>
+                            <li>Facilitar la búsqueda para los usuarios</li>
+                            <li>Crear una estructura clara en tu blog</li>
+                            <li>Mejorar la experiencia de navegación</li>
+                        </ul>
+                    </div>
+                    
+                    <form method="POST" role="form">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="{{ form.nombre.id_for_label }}" class="form-label">
+                                <i class="fas fa-tag me-2"></i>Nombre de la Categoría
+                            </label>
+                            {{ form.nombre }}
+                        </div>
+                        
+                        {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Por favor, corrige los errores en el formulario
+                            </div>
+                        {% endif %}
+                        
+                        <button type="submit" class="btn btn-purple">
+                            <i class="fas fa-plus me-2"></i>Crear Categoría
+                        </button>
+                    </form>
+                    
+                    <div class="category-actions">
+                        <a href="{% url 'apps.articulo:categoria_lista' %}" class="btn btn-outline-purple">
+                            <i class="fas fa-list me-2"></i>Ver Todas las Categorías
+                        </a>
+                        <a href="{% url 'apps.articulo:articulos' %}" class="btn btn-outline-purple">
+                            <i class="fas fa-arrow-left me-2"></i>Volver a Artículos
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+=======
 {% block contenido %}
 {% load crispy_forms_tags %}
 
@@ -17,4 +284,5 @@
     </div>
 </div>
 </center>
+>>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 {% endblock %}
