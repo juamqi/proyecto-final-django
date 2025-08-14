@@ -19,6 +19,11 @@
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Source+Sans+Pro:wght@300;400;700&display=swap">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href=" {% static 'assets/css/fontawesome.min.css' %}">
@@ -87,14 +92,205 @@
             font-weight: 400 !important;
             color: white !important;
         }
+
+        .custom-header {
+            height: 100px;
+        }
+
+        .footer-enhanced {
+            width: 100%;
+            background: linear-gradient(135deg, #0a0a0c 0%, #1a0d2e 50%, #0f0519 100%);
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(155, 0, 255, 0.15);
+        }
+
+        .footer-enhanced::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center top, rgba(155, 0, 255, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-brand-section {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .footer-navigation-section {
+            flex: 0 0 auto;
+            min-width: 200px;
+            text-align: right;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 28px;
+            font-weight: 700;
+            color: #9B00FF;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(155, 0, 255, 0.2);
+        }
+
+        .footer-description {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .footer-title {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .footer-nav li {
+            margin-bottom: 0;
+        }
+
+        .footer-nav a {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-nav a::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            right: 0;
+            background: #9B00FF;
+            transition: width 0.3s ease;
+        }
+
+        .footer-nav a:hover {
+            color: #9B00FF;
+            transform: translateX(-3px);
+        }
+
+        .footer-nav a:hover::before {
+            width: 100%;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .social-link:hover {
+            background: rgba(155, 0, 255, 0.15);
+            border-color: rgba(155, 0, 255, 0.4);
+            color: #9B00FF;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(155, 0, 255, 0.2);
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            margin: 25px 0 20px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-copyright {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-credits {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer-credits span {
+            color: #9B00FF;
+            font-weight: 600;
+        }
     </style>
 
 </head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.17"></script>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
-        <div class="container d-flex justify-content-between align-items-center">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom custom-header">
+        <div class="container d-flex justify-content-between align-items-center header-container">
 
             <a class="navbar-brand" href="{% url 'index' %}">blog ia</a>
 
@@ -106,8 +302,8 @@
 
             <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
                 id="templatemo_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <div class="container">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto align-items-center">
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'index' %}">Inicio</a>
                         </li>
@@ -147,6 +343,7 @@
         </div>
     </nav>
 
+
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -172,48 +369,59 @@
 
     {% endblock %}
 
-    <footer class="bg-dark" id="tempaltemo_footer">
-        <div class="container">
-            <div class="row text-light mb-4">
-                <div class="col-12 mb-3">
-                    <div class="w-100 my-3 border-top border-light"></div>
+    <footer class="footer-enhanced">
+        <div class="footer-container">
+            <div class="footer-content">
+
+                <!-- Izquierda: Logo + Texto + Redes -->
+                <div class="footer-section footer-brand-section">
+                    <h2 class="footer-logo">blog ia</h2>
+                    <p class="footer-description">
+                        Exploramos cómo la inteligencia artificial transforma nuestras vidas,
+                        entre avances, riesgos y oportunidades.
+                    </p>
+                    <div class="social-links">
+                        <a href="http://facebook.com/" target="_blank" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/" target="_blank" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://twitter.com/" target="_blank" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-auto me-auto">
-                    <ul class="list-inline text-left footer-icons">
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
-                                    class="fab fa-facebook-f fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
-                                    class="fab fa-twitter fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank"
-                                href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
-                        </li>
+
+                <!-- Derecha: Navegación -->
+                <div class="footer-section footer-navigation-section">
+                    <h3 class="footer-title">Navegación</h3>
+                    <ul class="footer-nav">
+                        <li><a href="inicio">Inicio</a></li>
+                        <li><a href="nosotros">Acerca de nosotros</a></li>
+                        <li><a href="articulos">Artículos</a></li>
+                        <li><a href="contacto">Contacto</a></li>
                     </ul>
                 </div>
-            </div>
-        </div>
 
-        <div class="w-100 bg-black py-3">
-            <div class="container">
-                <div class="row pt-2">
-                    <div class="col-12">
-                        <p class="text-left text-light">
-                            Informatorio &copy; Chaco 2025
-                            | Diseñado por <a rel="sponsored" href="#" target="_blank">Grupo 7 - Comisión 8</a>
-                        </p>
-                    </div>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    INFORMATORIO © 2025
+                </div>
+                <div class="footer-credits">
+                    Diseñado por <span>Grupo 7 - Comisión 8</span>
                 </div>
             </div>
         </div>
     </footer>
+
 
     <script src="{% static 'assets/js/jquery-1.11.0.min.js' %}"></script>
     <script src="{% static 'assets/js/jquery-migrate-1.2.1.min.js' %}"></script>
@@ -257,6 +465,7 @@
     {% endfor %}
     {% endif %}
     {{ messages|join:", " }}
+
 </body>
 
 </html>
