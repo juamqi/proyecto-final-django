@@ -33,11 +33,18 @@ class LoginUsuario(LoginView):
      
 class LogoutUsuario(LogoutView):
     template_name = 'registration/logout.html'
+    
+    # Allow both GET and POST requests
+    http_method_names = ['get', 'post']
 
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
         messages.success(request, 'Logout exitoso')
         return response
+    
+    def get(self, request, *args, **kwargs):
+        # Handle GET request by logging out the user
+        return super().post(request, *args, **kwargs)
 
 class UsuarioListView(LoginRequiredMixin, ListView):
     model = Usuario
