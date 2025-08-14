@@ -2,7 +2,6 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-<<<<<<< HEAD
 {% block title %}Iniciar Sesión{% endblock %}
 
 {% block content %}
@@ -233,48 +232,4 @@
         </div>
     </div>
 </div>
-=======
-
-<title>{% block title %} Registro de usuario {% endblock title %}</title>
-
-
-{% block contenido %}
-
-<div class="container-fluid bg-light py-5">
-    <div class="col-md-6 m-auto text-center">
-        <h1 class="h1">Iniciar sesión</h1>
-        <p>
-            A continuación ingresa tus credenciales.
-        </p>
-    </div>
-</div>
-
-<div class="container py-5">
-    <div class="row py-5">
-        <form action="" class="col-md-9 m-auto" method="POST" role="form">
-            {% csrf_token %}
-            <div class="row">
-
-                {{ form | crispy }}
-
-            </div>
-
-            <div class="row">
-                <div class="col text-behind mt-2">
-                    <a class="btn btn-primary" href="{% url 'apps.usuario:registrar' %}?next={{ request.GET.next }}">¿Todavía no está registrado?<br>Registrate</a>
-                </div>
-                <div class="col text-behind mt-2">
-                    <a class="btn btn-primary" href="{% url 'apps.usuario:password_reset' %}">¿Olvidaste tu contraseña?<br>Recuperar</a>
-                </div>
-                <div class="col text-center mt-2">
-                    <button type="submit" class="btn btn-success btn-lg px-3">Iniciar sesión</button>
-                </div>
-                
-            </div>
-        </form>
-    </div>
-</div>
-
-
->>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 {% endblock %}

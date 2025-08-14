@@ -1,18 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-<<<<<<< HEAD
 from django.views.generic import View, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .models import Comentario
 from .forms import ComentarioForm, EditarComentarioForm
-=======
-from django.views.generic import View, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from .models import Comentario
-from .forms import ComentarioForm
->>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 from apps.articulo.models import Articulo
 from apps.usuario.models import Usuario
 
@@ -69,7 +61,6 @@ class AgregarComentarioView(View):
         return render(request, 'comentario/agregarComentario.html', context)
 
 
-<<<<<<< HEAD
 class EditarComentarioView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comentario
     form_class = EditarComentarioForm
@@ -98,8 +89,6 @@ class EditarComentarioView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return context
 
 
-=======
->>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 class DeleteComentario(DeleteView):
     model = Comentario
     template_name = 'comentario/eliminarComentario.html'

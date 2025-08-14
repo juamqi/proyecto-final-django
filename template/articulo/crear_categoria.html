@@ -236,9 +236,6 @@
                     </form>
                     
                     <div class="text-center mt-4">
-                        <a href="{% url 'apps.articulo:categoria_lista' %}" class="btn btn-outline-purple">
-                            <i class="fas fa-list me-2"></i>Ver Todas las Categorías
-                        </a>
                         
                         {% if request.GET.next %}
                             <a href="{{ request.GET.next }}" class="btn btn-outline-purple">

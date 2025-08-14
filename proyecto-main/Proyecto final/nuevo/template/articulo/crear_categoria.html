@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-<<<<<<< HEAD
 {% load static %}
 {% load crispy_forms_tags %}
 
@@ -253,9 +252,6 @@
                     </form>
                     
                     <div class="category-actions">
-                        <a href="{% url 'apps.articulo:categoria_lista' %}" class="btn btn-outline-purple">
-                            <i class="fas fa-list me-2"></i>Ver Todas las Categorías
-                        </a>
                         <a href="{% url 'apps.articulo:articulos' %}" class="btn btn-outline-purple">
                             <i class="fas fa-arrow-left me-2"></i>Volver a Artículos
                         </a>
@@ -265,24 +261,4 @@
         </div>
     </div>
 </div>
-=======
-{% block contenido %}
-{% load crispy_forms_tags %}
-
-<center>
-
-<div class='main-container' style="text-align: center; margin-top: 12%; margin-bottom: 12%;"></div>
-        <h1>Agregar nueva categoría</h1>
-        <form method="post">
-        {% csrf_token %}
-        {{ form | crispy }}
-        <input class="btn btn-success" type="submit" value="Agregar">
-    </form>
-    <div class="container-fluid" style="margin-top: 300px;">
-        <a class="btn btn-success" 
-        href="{% url 'apps.articulo:categoria_lista' %}">Listar todas las categorias</a>
-    </div>
-</div>
-</center>
->>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 {% endblock %}

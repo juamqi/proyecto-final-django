@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<<<<<<< HEAD
 {% block title %}Cerrar Sesión{% endblock %}
 
 {% block content %}
@@ -174,16 +173,4 @@
         </div>
     </div>
 </div>
-=======
-{% block content %}
-
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-
->>>>>>> 7a84f95b668fa99484bc0501174096f431b6fba4
 {% endblock %}
