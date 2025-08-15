@@ -158,7 +158,6 @@
         line-height: 64px;
         margin-bottom: 16px;
         text-shadow: 0 0 20px rgba(155, 0, 255, 0.3);
-        display: inline-block;
     }
 
     .hero-subtitle {
@@ -491,7 +490,7 @@
         background: white;
         border-radius: 50%;
         opacity: 0;
-        animation: blinkDot 1.5s infinite;
+        animation: blinkDot 1.5s infinite, floatDots 4s ease-in-out infinite;
     }
 
     @keyframes blinkDot {
@@ -503,6 +502,76 @@
 
         50% {
             opacity: 1;
+        }
+    }
+
+    @keyframes fadeSlideUp {
+        0% {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes floatDots {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .btn-destacados {
+        animation: pulseBtn 2s infinite;
+    }
+
+    @keyframes pulseBtn {
+
+        0%,
+        100% {
+            box-shadow: 0 0 0 0 rgba(155, 0, 255, 0.5);
+        }
+
+        50% {
+            box-shadow: 0 0 20px 10px rgba(155, 0, 255, 0.2);
+        }
+    }
+
+    .hero-title,
+    .hero-subtitle {
+        opacity: 0;
+        animation: fadeSlideUp 1s ease-out forwards;
+    }
+
+    .hero-title {
+        animation-delay: 0.2s;
+    }
+
+    .hero-subtitle {
+        animation-delay: 0.5s;
+    }
+
+    @keyframes typing {
+        from {
+            width: 0;
+        }
+
+        to {
+            width: 100%;
+        }
+    }
+
+    @keyframes blinkCursor {
+        50% {
+            border-color: transparent;
         }
     }
 </style>
@@ -547,9 +616,11 @@
             </div>
         </div>
         <h1 class="hero-title">
-            <span>la inteligencia</span>
-            <span>artificial en tu</span>
-            <span>día a día</span>
+            <div class="typing-container">
+                <div class="typing-line" id="line1">la inteligencia</div>
+                <div class="typing-line" id="line2">artificial en tu</div>
+                <div class="typing-line" id="line3">día a día</div>
+            </div>
         </h1>
         <p class="hero-subtitle">
             Exploramos cómo la IA transforma nuestras vidas, entre avances, riesgos y oportunidades.

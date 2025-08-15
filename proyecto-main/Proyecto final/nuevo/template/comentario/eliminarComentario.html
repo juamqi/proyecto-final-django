@@ -1,31 +1,119 @@
 {% extends 'base.html' %}
-{% block contenido %}
 {% load colaborador_tags %}
 
-{% if user.is_superuser or request.user|has_group:"Colaborador"  %}
-<form method="post" id="deleteForm">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ request.get_full_path }}">
-    <h1>{{ mensaje }}</h1>
-    <div class='main-container' style="text-align: center; margin-top: 12%; margin-bottom: 12%;">
-        <h3><br><br><br><br>¿Está seguro que desea eliminar el comentario?</h3>
-        <input class="btn btn-danger" type="submit" value='Si, eliminar'>
-        <button class="btn btn-success" id="cancelButton">No, Cancelar</button>
+{% block contenido %}
+<style>
+    body {
+        background: #0a0a0c;
+        color: #fff;
+        font-family: "Source Sans Pro", sans-serif;
+    }
+
+    .delete-comment-section {
+        padding: 80px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .delete-comment-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(155, 0, 255, 0.2);
+        border-radius: 20px;
+        padding: 40px;
+        max-width: 600px;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .delete-comment-title {
+        font-family: 'Orbitron', monospace;
+        font-size: 28px;
+        font-weight: 700;
+        color: #ff4757;
+        text-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
+        margin-bottom: 20px;
+    }
+
+    .delete-comment-text {
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 30px;
+        font-weight: 300;
+    }
+
+    .btn-modern {
+        background: linear-gradient(135deg, #9B00FF 0%, #7a00cc 100%);
+        border: none;
+        border-radius: 25px;
+        font-weight: 700;
+        padding: 12px 24px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 14px;
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+    }
+
+    .btn-modern:hover {
+        background: linear-gradient(135deg, #8500e6 0%, #6600aa 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(155, 0, 255, 0.4);
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
+    }
+
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #ff3742 0%, #ff2f3a 100%);
+        box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+    }
+
+    .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    }
+</style>
+
+<section class="delete-comment-section">
+    {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+    <form method="post" id="deleteForm" class="delete-comment-card">
+        {% csrf_token %}
+        <h2 class="delete-comment-title">Eliminar comentario</h2>
+        <p class="delete-comment-text">¿Estás seguro que deseas eliminar este comentario?</p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <button type="submit" class="btn-modern btn-danger">
+                <i class="fas fa-trash"></i> Sí, eliminar
+            </button>
+            <button class="btn-modern btn-secondary" id="cancelButton">
+                <i class="fas fa-times"></i> No, cancelar
+            </button>
+        </div>
+    </form>
+    {% else %}
+    <div class="delete-comment-card">
+        <h2 class="delete-comment-title">Acceso denegado</h2>
+        <p class="delete-comment-text">Solo usuarios con permisos pueden acceder a esta página.</p>
     </div>
-</form>
-{% else %}
-    <div class="container text-center">
-        <br><br><br><br>
-        <h1>Solo usuarios con permisos pueden acceder a esta página</h1>
-        <br><br><br><br>
-    </div>
-{% endif %}
+    {% endif %}
+</section>
 
 <script>
-document.getElementById('cancelButton').addEventListener('click', function(event) {
+document.getElementById('cancelButton')?.addEventListener('click', function(event) {
     event.preventDefault();
     history.back();
 });
 </script>
-
 {% endblock %}

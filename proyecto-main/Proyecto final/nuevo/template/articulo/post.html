@@ -392,9 +392,9 @@
 
                     <div class="article-content">
                         <div class="article-meta">
-                            <a class="category-badge" 
-                               href="{% url 'apps.articulo:articulos' %}?search=&categoria={{ articulos.categoria.pk }}&orden=antiguedad_desc"
-                               title="Ver más artículos de {{ articulos.categoria }}">
+                            <a class="category-badge"
+                                href="{% url 'apps.articulo:articulos' %}?search=&categoria={{ articulos.categoria.pk }}&orden=antiguedad_desc"
+                                title="Ver más artículos de {{ articulos.categoria }}">
                                 <i class="fas fa-tag"></i>
                                 {{ articulos.categoria | capfirst }}
                             </a>
@@ -461,13 +461,22 @@
                                 <div class="comment-author">{{ comentario.usuario }}</div>
                                 <div class="comment-date">{{ comentario.fecha }}</div>
                             </div>
-                            {% if user.is_superuser or request.user|has_group:"Colaborador" %}
-                            <a class="btn-modern btn-danger" style="padding: 8px 16px; font-size: 12px;"
-                                href="{% url 'apps.comentario:eliminarComentario' comentario.pk %}">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                            {% endif %}
+                            <div style="display: flex; gap: 5px;">
+                                {% if user == comentario.usuario %}
+                                <a class="btn-modern btn-secondary" style="padding: 8px 16px; font-size: 12px;"
+                                    href="{% url 'apps.comentario:editar_comentario' comentario.pk %}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                {% endif %}
+                                {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+                                <a class="btn-modern btn-danger" style="padding: 8px 16px; font-size: 12px;"
+                                    href="{% url 'apps.comentario:eliminarComentario' comentario.pk %}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                                {% endif %}
+                            </div>
                         </div>
+
                         <div class="comment-text">
                             {{ comentario.texto }}
                         </div>
