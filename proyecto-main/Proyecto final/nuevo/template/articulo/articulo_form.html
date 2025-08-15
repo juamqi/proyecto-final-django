@@ -11,12 +11,21 @@
         background-color: #000000;
         color: #ffffff;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+    
+    html {
+        overflow-x: hidden;
     }
     
     .article-container {
         background: linear-gradient(135deg, #000000, #1a1a1a);
         min-height: 100vh;
         padding: 2rem 0;
+        width: 100%;
+        overflow-x: hidden;
     }
     
     .article-card {
@@ -69,33 +78,45 @@
     }
     
     .form-control, .form-select, textarea, input[type="text"], input[type="file"], input[type="date"] {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(138, 43, 226, 0.3);
-        border-radius: 10px;
-        color: #ffffff;
-        padding: 1rem 1.2rem;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        width: 100%;
-        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(138, 43, 226, 0.3) !important;
+        border-radius: 10px !important;
+        color: #ffffff !important;
+        padding: 1rem 1.2rem !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        min-height: 50px !important;
+    }
+    
+    /* Estilos específicos para textarea */
+    textarea.form-control {
+        min-height: 120px !important;
+        resize: vertical !important;
     }
     
     .form-control:focus, .form-select:focus, textarea:focus, input[type="text"]:focus, input[type="file"]:focus, input[type="date"]:focus {
-        background: rgba(255, 255, 255, 0.15);
-        border-color: #8a2be2;
-        box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.25);
-        color: #ffffff;
-        outline: none;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border-color: #8a2be2 !important;
+        box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.25) !important;
+        color: #ffffff !important;
+        outline: none !important;
     }
     
     .form-control::placeholder, textarea::placeholder {
-        color: #888888;
+        color: #888888 !important;
     }
     
     /* Estilos específicos para el select */
     select.form-control, .form-select {
         color: #ffffff !important;
         background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    select option {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
     }
     
     .form-label {
@@ -153,16 +174,17 @@
         transform: rotate(45deg);
         opacity: 0.1;
         z-index: -1;
+        pointer-events: none;
     }
     
     .shape-1 {
         top: 15%;
-        right: 15%;
+        right: 10%;
     }
     
     .shape-2 {
         bottom: 15%;
-        left: 15%;
+        left: 10%;
         width: 100px;
         height: 100px;
     }
@@ -204,10 +226,20 @@
     
     .row {
         margin: 0 -0.5rem;
+        max-width: 100%;
     }
     
     .col-md-6 {
         padding: 0 0.5rem;
+        max-width: 100%;
+    }
+    
+    .container {
+        max-width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .file-input-container {
@@ -247,6 +279,22 @@
         margin-top: 1rem;
         border: 2px solid rgba(138, 43, 226, 0.3);
     }
+
+    /* Fix para errores de campos */
+    .errorlist {
+        color: #ff6b6b;
+        background: rgba(255, 107, 107, 0.1);
+        border: 1px solid rgba(255, 107, 107, 0.3);
+        border-radius: 5px;
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+        list-style: none;
+    }
+    
+    .errorlist li {
+        margin: 0;
+        padding: 0;
+    }
 </style>
 
 {% if user.is_superuser or request.user|has_group:"Colaborador" %}
@@ -283,7 +331,21 @@
                                     <label for="{{ form.titulo.id_for_label }}" class="form-label">
                                         <i class="fas fa-heading me-2"></i>Título del Artículo
                                     </label>
-                                    {{ form.titulo }}
+                                    <input type="text" 
+                                           name="{{ form.titulo.name }}" 
+                                           class="form-control"
+                                           id="{{ form.titulo.id_for_label }}"
+                                           value="{% if form.titulo.value %}{{ form.titulo.value }}{% endif %}"
+                                           placeholder="Ingresa el título de tu artículo"
+                                           maxlength="200"
+                                           required>
+                                    {% if form.titulo.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.titulo.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -291,36 +353,77 @@
                                     <label for="{{ form.categoria.id_for_label }}" class="form-label">
                                         <i class="fas fa-tag me-2"></i>Categoría
                                     </label>
-                                    {{ form.categoria }}
+                                    <select name="{{ form.categoria.name }}" 
+                                            class="form-control form-select"
+                                            id="{{ form.categoria.id_for_label }}"
+                                            required>
+                                        <option value="">Selecciona una categoría</option>
+                                        {% for choice in form.categoria.field.queryset %}
+                                            <option value="{{ choice.pk }}" 
+                                                    {% if form.categoria.value == choice.pk|stringformat:"s" %}selected{% endif %}>
+                                                {{ choice }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                    {% if form.categoria.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.categoria.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
 
-                        
-                    <div class="category-actions">
-                        {% if editing %}
-                            <a class="btn btn-outline-purple" href="{% url 'apps.articulo:crear_categoria' %}?next={% url 'apps.articulo:articulo_actualizar' pk=object.id %}">
-                                <i class="fas fa-plus me-2"></i>Crear Nueva Categoría
-                            </a>
-                        {% else %}
-                            <a class="btn btn-outline-purple" href="{% url 'apps.articulo:crear_categoria' %}">
-                                <i class="fas fa-plus me-2"></i>Crear Nueva Categoría
-                            </a>
-                        {% endif %}
-                    </div>
+                        <div class="category-actions">
+                            {% if editing %}
+                                <a class="btn btn-outline-purple" href="{% url 'apps.articulo:crear_categoria' %}?next={% url 'apps.articulo:articulo_actualizar' pk=object.id %}">
+                                    <i class="fas fa-plus me-2"></i>Crear Nueva Categoría
+                                </a>
+                            {% else %}
+                                <a class="btn btn-outline-purple" href="{% url 'apps.articulo:crear_categoria' %}">
+                                    <i class="fas fa-plus me-2"></i>Crear Nueva Categoría
+                                </a>
+                            {% endif %}
+                        </div>
                         
                         <div class="form-group">
                             <label for="{{ form.resumen.id_for_label }}" class="form-label">
                                 <i class="fas fa-align-left me-2"></i>Resumen
                             </label>
-                            {{ form.resumen }}
+                            <textarea name="{{ form.resumen.name }}" 
+                                      class="form-control"
+                                      id="{{ form.resumen.id_for_label }}"
+                                      rows="4"
+                                      placeholder="Escribe un breve resumen de tu artículo (máximo 500 caracteres)"
+                                      maxlength="500">{% if form.resumen.value %}{{ form.resumen.value }}{% endif %}</textarea>
+                            {% if form.resumen.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.resumen.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                         
                         <div class="form-group">
                             <label for="{{ form.contenido.id_for_label }}" class="form-label">
                                 <i class="fas fa-file-text me-2"></i>Contenido Completo
                             </label>
-                            {{ form.contenido }}
+                            <textarea name="{{ form.contenido.name }}" 
+                                      class="form-control"
+                                      id="{{ form.contenido.id_for_label }}"
+                                      rows="10"
+                                      placeholder="Escribe el contenido completo de tu artículo"
+                                      required>{% if form.contenido.value %}{{ form.contenido.value }}{% endif %}</textarea>
+                            {% if form.contenido.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.contenido.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                         
                         <div class="form-group">
@@ -328,10 +431,14 @@
                                 <i class="fas fa-image me-2"></i>Imagen del Artículo
                             </label>
                             <div class="file-input-container">
-                                <label class="file-input-label">
+                                <label class="file-input-label" for="{{ form.imagen.id_for_label }}">
                                     <i class="fas fa-cloud-upload-alt me-2"></i>
                                     <span id="file-name">Seleccionar archivo</span>
-                                    {{ form.imagen }}
+                                    <input type="file" 
+                                           name="{{ form.imagen.name }}" 
+                                           id="{{ form.imagen.id_for_label }}"
+                                           class="file-input"
+                                           accept="image/*">
                                 </label>
                             </div>
                             {% if object.imagen %}
@@ -340,12 +447,21 @@
                                     <img src="{{ object.imagen.url }}" alt="Imagen actual" class="preview-image">
                                 </div>
                             {% endif %}
+                            {% if form.imagen.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.imagen.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                         
-                        {% if form.errors %}
+                        {% if form.non_field_errors %}
                             <div class="alert alert-danger" role="alert">
                                 <i class="fas fa-exclamation-triangle me-2"></i>
-                                Por favor, corrige los errores en el formulario
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
                             </div>
                         {% endif %}
                         
@@ -385,6 +501,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 fileName.textContent = 'Seleccionar archivo';
             }
         });
+    }
+
+    // Contador de caracteres para el resumen
+    const resumenTextarea = document.getElementById('{{ form.resumen.id_for_label }}');
+    if (resumenTextarea) {
+        const maxLength = 500;
+        
+        // Crear elemento contador
+        const counter = document.createElement('small');
+        counter.className = 'text-muted mt-1 d-block';
+        counter.style.textAlign = 'right';
+        
+        function updateCounter() {
+            const remaining = maxLength - resumenTextarea.value.length;
+            counter.textContent = `${resumenTextarea.value.length}/${maxLength} caracteres`;
+            
+            if (remaining < 50) {
+                counter.style.color = '#ff6b6b';
+            } else {
+                counter.style.color = '#888888';
+            }
+        }
+        
+        resumenTextarea.parentNode.appendChild(counter);
+        updateCounter();
+        
+        resumenTextarea.addEventListener('input', updateCounter);
     }
 });
 </script>
