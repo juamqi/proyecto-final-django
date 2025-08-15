@@ -187,6 +187,36 @@
     .col-md-6 {
         padding: 0 0.5rem;
     }
+
+    /* Estilos para mostrar errores de validación */
+    .errorlist {
+        list-style: none;
+        padding: 0;
+        margin: 0.5rem 0;
+    }
+    
+    .errorlist li {
+        color: #ff6b6b;
+        font-size: 0.9rem;
+        background: rgba(255, 107, 107, 0.1);
+        padding: 0.5rem;
+        border-radius: 5px;
+        border-left: 3px solid #ff6b6b;
+        margin-bottom: 0.5rem;
+    }
+
+    .alert {
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        border: none;
+    }
+
+    .alert-danger {
+        background: rgba(255, 107, 107, 0.1);
+        color: #ff6b6b;
+        border-left: 3px solid #ff6b6b;
+    }
 </style>
 
 <div class="auth-container">
@@ -208,6 +238,13 @@
                     <form method="POST" enctype="multipart/form-data" role="form">
                         {% csrf_token %}
                         
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+                        
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -215,6 +252,9 @@
                                         <i class="fas fa-user me-2"></i>Usuario
                                     </label>
                                     {{ form.username }}
+                                    {% if form.username.errors %}
+                                        {{ form.username.errors }}
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -223,6 +263,9 @@
                                         <i class="fas fa-envelope me-2"></i>Email
                                     </label>
                                     {{ form.email }}
+                                    {% if form.email.errors %}
+                                        {{ form.email.errors }}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -234,6 +277,9 @@
                                         <i class="fas fa-user me-2"></i>Nombre
                                     </label>
                                     {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                        {{ form.first_name.errors }}
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -242,6 +288,9 @@
                                         <i class="fas fa-user me-2"></i>Apellido
                                     </label>
                                     {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                        {{ form.last_name.errors }}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -253,6 +302,9 @@
                                         <i class="fas fa-lock me-2"></i>Contraseña
                                     </label>
                                     {{ form.password1 }}
+                                    {% if form.password1.errors %}
+                                        {{ form.password1.errors }}
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -261,6 +313,9 @@
                                         <i class="fas fa-lock me-2"></i>Confirmar Contraseña
                                     </label>
                                     {{ form.password2 }}
+                                    {% if form.password2.errors %}
+                                        {{ form.password2.errors }}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -270,6 +325,9 @@
                                 <i class="fas fa-image me-2"></i>Foto de Perfil (Opcional)
                             </label>
                             {{ form.imagen }}
+                            {% if form.imagen.errors %}
+                                {{ form.imagen.errors }}
+                            {% endif %}
                         </div>
                         
                         {% if form.errors %}
@@ -285,7 +343,7 @@
                     </form>
                     
                     <div class="auth-links">
-                        <a href="{% url 'login' %}?next={{ request.GET.next }}" class="btn btn-outline-purple">
+                        <a href="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" class="btn btn-outline-purple">
                             <i class="fas fa-sign-in-alt me-2"></i>¿Ya tienes cuenta? Inicia Sesión
                         </a>
                     </div>
