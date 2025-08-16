@@ -372,7 +372,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <h1 class="article-title">{{ articulos.titulo | capfirst }}</h1>
+                <h1 class="article-title">{{ articulo.titulo | capfirst }}</h1>
             </div>
         </div>
     </div>
@@ -383,31 +383,31 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="article-card">
-                    {% if articulos.imagen %}
-                    <img class="article-image" src="{{ articulos.imagen.url }}" alt="{{ articulos.titulo }}">
+                    {% if articulo.imagen %}
+                    <img class="article-image" src="{{ articulo.imagen.url }}" alt="{{ articulo.titulo }}">
                     {% else %}
                     <img class="article-image" src="{% static '/assets/img/banner_img_01.jpg' %}"
-                        alt="{{ articulos.titulo }}">
+                        alt="{{ articulo.titulo }}">
                     {% endif %}
 
                     <div class="article-content">
                         <div class="article-meta">
                             <a class="category-badge"
-                                href="{% url 'apps.articulo:articulos' %}?search=&categoria={{ articulos.categoria.pk }}&orden=antiguedad_desc"
-                                title="Ver más artículos de {{ articulos.categoria }}">
+                                href="{% url 'apps.articulo:articulos' %}?search=&categoria={{ articulo.categoria.pk }}&orden=antiguedad_desc"
+                                title="Ver más artículos de {{ articulo.categoria }}">
                                 <i class="fas fa-tag"></i>
-                                {{ articulos.categoria | capfirst }}
+                                {{ articulo.categoria | capfirst }}
                             </a>
                         </div>
 
-                        {% if articulos.resumen %}
+                        {% if articulo.resumen %}
                         <div class="article-summary">
-                            {{ articulos.resumen | capfirst }}
+                            {{ articulo.resumen | capfirst }}
                         </div>
                         {% endif %}
 
                         <div class="article-text">
-                            {{ articulos.contenido | capfirst }}
+                            {{ articulo.contenido | capfirst }}
                         </div>
 
                         <div class="action-buttons">
@@ -417,12 +417,12 @@
                             </a>
 
                             {% if user.is_superuser or request.user|has_group:"Colaborador" %}
-                            <a href="{% url 'apps.articulo:articulo_actualizar' pk=articulos.pk %}"
+                            <a href="{% url 'apps.articulo:articulo_actualizar' pk=articulo.pk %}"
                                 class="btn-modern btn-secondary">
                                 <i class="fas fa-edit"></i>
                                 Editar Artículo
                             </a>
-                            <a href="{% url 'apps.articulo:articulo_eliminar' pk=articulos.pk %}"
+                            <a href="{% url 'apps.articulo:articulo_eliminar' pk=articulo.pk %}"
                                 class="btn-modern btn-danger">
                                 <i class="fas fa-trash"></i>
                                 Eliminar Artículo

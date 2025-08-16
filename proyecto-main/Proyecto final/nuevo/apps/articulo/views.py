@@ -55,18 +55,24 @@ class ArticuloListView(ListView):
 class ArticuloDetailView(DetailView):
     model = Articulo
     template_name = "articulo/post.html" 
-    success_url = 'articulos'
-    context_object_name = "articulos" 
-    pk_url_kwarg = "id" 
+    context_object_name = "articulo"  # ← Cambié de "articulos" a "articulo" (singular)
+    pk_url_kwarg = "id"  # ← Esto está correcto
     queryset = Articulo.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Agregar debug temporal
+        print(f"DEBUG - Objeto obtenido: {self.object}")
+        print(f"DEBUG - Título: {self.object.titulo}")
+        print(f"DEBUG - Resumen: '{self.object.resumen}'")
+        
         context['form'] = ComentarioForm()
         context['comentarios'] = Comentario.objects.filter(articulo_id=self.kwargs['id'])
         return context
 
     def post(self, request, *args, **kwargs):
+        # Es importante obtener el objeto antes de procesar el POST
+        self.object = self.get_object()
         form = ComentarioForm(request.POST)
         if form.is_valid():
             messages.success(self.request, 'Comentario creado con éxito.')
