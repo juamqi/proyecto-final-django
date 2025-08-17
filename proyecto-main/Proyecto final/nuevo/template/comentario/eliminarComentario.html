@@ -88,7 +88,7 @@
 </style>
 
 <section class="delete-comment-section">
-    {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+    {% if user == comentario.usuario or user.is_superuser or request.user|has_group:"Colaborador" %}
     <form method="post" id="deleteForm" class="delete-comment-card">
         {% csrf_token %}
         <h2 class="delete-comment-title">Eliminar comentario</h2>

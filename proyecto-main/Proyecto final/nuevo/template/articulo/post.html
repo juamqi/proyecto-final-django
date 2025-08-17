@@ -467,8 +467,11 @@
                                     href="{% url 'apps.comentario:editar_comentario' comentario.pk %}">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                {% endif %}
-                                {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+                                <a class="btn-modern btn-danger" style="padding: 8px 16px; font-size: 12px;"
+                                    href="{% url 'apps.comentario:eliminarComentario' comentario.pk %}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                                {% elif user.is_superuser or request.user|has_group:"Colaborador" %}
                                 <a class="btn-modern btn-danger" style="padding: 8px 16px; font-size: 12px;"
                                     href="{% url 'apps.comentario:eliminarComentario' comentario.pk %}">
                                     <i class="fas fa-trash"></i>

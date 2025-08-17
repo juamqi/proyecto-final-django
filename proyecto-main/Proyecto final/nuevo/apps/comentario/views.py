@@ -89,9 +89,15 @@ class EditarComentarioView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return context
 
 
-class DeleteComentario(DeleteView):
+class DeleteComentario(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comentario
     template_name = 'comentario/eliminarComentario.html'
+    
+    def test_func(self):
+        comentario = self.get_object()
+        return (self.request.user == comentario.usuario or 
+                self.request.user.is_superuser or 
+                self.request.user.groups.filter(name='Colaborador').exists())
     
     def get_success_url(self):
         messages.success(self.request, '¡Borrado con éxito!')
